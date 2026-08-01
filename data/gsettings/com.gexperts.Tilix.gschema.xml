@@ -113,6 +113,13 @@
     <value nick='tty' value='4'/>
   </enum>
 
+  <enum id='com.gexperts.Tilix.CtrlBackspaceAction'>
+    <value nick='none' value='0'/>
+    <value nick='control-w' value='1'/>
+    <value nick='control-h' value='2'/>
+    <value nick='del' value='3'/>
+  </enum>
+
   <enum id='com.gexperts.Tilix.ExitAction'>
     <value nick='close' value='0'/>
     <value nick='restart' value='1'/>
@@ -749,6 +756,10 @@
     <key name="cjk-utf8-ambiguous-width" enum="com.gexperts.Tilix.CJKWidth">
       <default>'narrow'</default>
       <summary>Whether ambiguous-width characters are narrow or wide when using UTF-8 encoding</summary>
+    </key>
+    <key name="ctrl-backspace" enum="com.gexperts.Tilix.CtrlBackspaceAction">
+      <default>'none'</default>
+      <summary>What Ctrl+Backspace sends instead of Backspace, e.g. Control-W to delete the previous word</summary>
     </key>
     <!-- Terminal Title -->
     <key name="terminal-title" type="s">

@@ -1084,6 +1084,15 @@ private:
         grid.attach(cbDelete, 1, row, 1, 1);
         row++;
 
+        Label lblCtrlBackspace = new Label(_("Ctrl+Backspace generates"));
+        lblCtrlBackspace.setHalign(GtkAlign.END);
+        grid.attach(lblCtrlBackspace, 0, row, 1, 1);
+        ComboBox cbCtrlBackspace = createNameValueCombo([_("Default"), _("Control-W (delete word)"), _("Control-H"), _("ASCII DEL")], SETTINGS_PROFILE_CTRL_BACKSPACE_VALUES);
+        bh.bind(SETTINGS_PROFILE_CTRL_BACKSPACE_KEY, cbCtrlBackspace, "active-id", GSettingsBindFlags.DEFAULT);
+
+        grid.attach(cbCtrlBackspace, 1, row, 1, 1);
+        row++;
+
         Label lblEncoding = new Label(_("Encoding"));
         lblEncoding.setHalign(GtkAlign.END);
         grid.attach(lblEncoding, 0, row, 1, 1);

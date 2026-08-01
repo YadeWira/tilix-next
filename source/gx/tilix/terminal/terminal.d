@@ -1050,6 +1050,25 @@ private:
         vteHandlers ~= vte.addOnKeyPress(delegate(Event event, Widget widget) {
             if (vte is null) return false;
 
+            // Optionally convert Ctrl+Backspace into a different control code, e.g.
+            // Control-W, which most shells/readline bind to backward-kill-word.
+            if (event.key.keyval == GdkKeysyms.GDK_BackSpace && (event.key.state & ModifierType.CONTROL_MASK)) {
+                string ctrlBackspaceAction = gsProfile.getString(SETTINGS_PROFILE_CTRL_BACKSPACE_KEY);
+                switch (ctrlBackspaceAction) {
+                    case SETTINGS_PROFILE_CTRL_BACKSPACE_VALUES[1]: // control-w
+                        vte.feedChild("\u0017");
+                        return true;
+                    case SETTINGS_PROFILE_CTRL_BACKSPACE_VALUES[2]: // control-h
+                        vte.feedChild("\u0008");
+                        return true;
+                    case SETTINGS_PROFILE_CTRL_BACKSPACE_VALUES[3]: // del
+                        vte.feedChild("\u007F");
+                        return true;
+                    default:
+                        break;
+                }
+            }
+
             if (event.key.keyval == GdkKeysyms.GDK_Return && checkVTEFeature(TerminalFeature.EVENT_SCREEN_CHANGED) && currentScreen == TerminalScreen.NORMAL) {
                 glong row, column;
                 vte.getCursorPosition(column, row);
