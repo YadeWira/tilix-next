@@ -984,8 +984,7 @@ private:
                         glong cursorCol, cursorRow;
                         vte.getCursorPosition(cursorCol, cursorRow);
                         if (cursorRow > 0) cursorRow--;
-                        ArrayG attr = new ArrayG(false, false, 16);
-                        string text = vte.getTextRange(cursorRow, 0, cursorRow, 128, null, null, attr);
+                        string text = getTerminalTextRange(cursorRow, 0, cursorRow, 128);
                         notifyProcessNotification(_("Terminal Activity"), text, uuid);
                     }
                 }
@@ -1002,10 +1001,16 @@ private:
         });
 
         /*
-         * Monitor changes in the VTE to test for triggers
+         * Monitor changes in the VTE to test for triggers. contents-changed is a
+         * standard, always-available VTE signal; it was previously only wired up
+         * inside the EVENT_SCREEN_CHANGED feature check, which gates on
+         * "terminal-screen-changed", a signal that only ever existed on old,
+         * distro-patched VTE builds. On any stock VTE that check is false, so
+         * triggers never got connected at all. Only terminal-screen-changed
+         * itself needs to stay behind that check.
          */
+        vteHandlers ~= vte.addOnContentsChanged(&onVTECheckTriggers, GConnectFlags.AFTER);
         if (checkVTEFeature(TerminalFeature.EVENT_SCREEN_CHANGED)) {
-            vteHandlers ~= vte.addOnContentsChanged(&onVTECheckTriggers, GConnectFlags.AFTER);
             vteHandlers ~= vte.addOnTerminalScreenChanged(&onVTEScreenChanged);
         }
 
@@ -1604,6 +1609,21 @@ private:
     }
 
     /**
+     * gtk-d's Terminal.getTextRange() always allocates a non-null GArray for the
+     * deprecated attributes out-param, and on current VTE that makes
+     * vte_terminal_get_text_range() return NULL for the text itself (VTE emits
+     * a deprecation warning saying as much). Call the C function directly with
+     * a real NULL there instead, since we never use the attributes anyway.
+     */
+    string getTerminalTextRange(glong startRow, glong startCol, glong endRow, glong endCol) {
+        import vte.c.functions : vte_terminal_get_text_range;
+
+        char* result = vte_terminal_get_text_range(vte.getTerminalStruct(), startRow, startCol, endRow, endCol, null, null, null);
+        scope(exit) if (result !is null) Str.freeString(result);
+        return Str.toString(result);
+    }
+
+    /**
      * This method responds to VTE content changes and checks if a trigger has been activated.
      * It would be nice to detect user typing and not run triggers when text changed but
      * not sure if an ideal way to accomplish that without being leading to false detections.
@@ -1619,7 +1639,6 @@ private:
 
         glong cursorRow, cursorCol;
         vte.getCursorPosition(cursorCol, cursorRow);
-        //tracef("triggerLastRowChecked=%d, cursorRow=%d", triggerLastRowChecked, cursorRow);
 
         //Check that position has moved to warrant check
         if (cursorRow > triggerLastRowChecked || (cursorRow == triggerLastRowChecked && cursorCol > triggerLastColChecked)) {
@@ -1635,10 +1654,10 @@ private:
                 startCol = 0;
             }
             //tracef("Testing trigger: (%d, %d) to (%d, %d)", startRow, startCol, cursorRow, cursorCol);
-            ArrayG attr;
             //tracef("Checking from %d,%d to %d,%d",startRow, startCol, cursorRow, cursorCol);
-            if (startRow <0) startRow = 0;
-            string text = vte.getTextRange(startRow, startCol, cursorRow, cursorCol, null, null, attr);
+            if (startRow < 0) startRow = 0;
+            if (startCol < 0) startCol = 0;
+            string text = getTerminalTextRange(startRow, startCol, cursorRow, cursorCol);
             // Update position early in case we get re-entrant event
             triggerLastRowChecked = cursorRow;
             triggerLastColChecked = cursorCol;
@@ -1646,7 +1665,6 @@ private:
             TerminalTriggerMatch[] triggerMatches;
             foreach(trigger; triggers) {
                 auto matches = matchAll(text, trigger.compiledRegex);
-                //tracef("Matching trigger '%s' against text '%s'", trigger.pattern, text);
                 foreach (m; matches) {
                     string[] groups = [m.hit];
                     foreach (group; m.captures) {
