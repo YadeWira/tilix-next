@@ -1,13 +1,9 @@
-![Build Status](https://github.com/gnunn1/tilix/workflows/Build%20Test/badge.svg)
-[![Translation status](https://hosted.weblate.org/widgets/tilix/-/svg-badge.svg)](https://hosted.weblate.org/engage/tilix/?utm_source=widget)
-# Tilix
+![Build Status](https://github.com/YadeWira/tilix-next/actions/workflows/build-test.yml/badge.svg)
+# Tilix (tilix-next)
 A tiling terminal emulator for Linux using GTK+ 3. The Tilix web site for users is available at [https://gnunn1.github.io/tilix-web](https://gnunn1.github.io/tilix-web).
 
-> :warning: **Maintainers Wanted**<br/>
-> This project is looking for maintainers!
-> At the moment, only very minimal maintenance is done, no new features will be implemented and pull-requests may be reviewed very slowly.
->
-> If you are interested in giving Tilix some :heart:, [please chime in](https://github.com/gnunn1/tilix/issues/1700)!
+> **tilix-next** is an actively maintained fork of [gnunn1/tilix](https://github.com/gnunn1/tilix), picking up bug fixes and small features from that
+> project's open issues and pull requests while it looks for new maintainers.
 
 ###### Screenshot
 ![Screenshot](https://gnunn1.github.io/tilix-web/assets/images/gallery/tilix-screenshot-1.png)
@@ -80,8 +76,10 @@ If you are having issues with Tilix, feel free to open issues here in github as 
 
 ### Localization
 
-Tilix is localized using Weblate, please visit the Weblate hosted [Tilix translations site](https://hosted.weblate.org/projects/tilix/translations) in order to assist
-with translations, please do not submit direct pull requests to this repository for translations.
+The existing translations in this repository were inherited from upstream Tilix, which is localized using the Weblate hosted
+[Tilix translations site](https://hosted.weblate.org/projects/tilix/translations). tilix-next does not have its own Weblate project, so new strings
+introduced here are not yet covered by that translation effort; PRs adding or updating translations for this fork's own changes are welcome directly
+against this repository.
 
 ### Building
 
