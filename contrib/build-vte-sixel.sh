@@ -93,9 +93,48 @@ ninja -C "$WORKDIR/_build"
 echo ">>> Installing"
 ninja -C "$WORKDIR/_build" install
 
-# --- done ------------------------------------------------------------------
-LIBDIR="$(dirname "$(find "$PREFIX/lib" -name 'libvte-2.91.so.0' -print -quit)")"
+# --- verify ----------------------------------------------------------------
+# A successful build is not proof of a useful one: the sixel meson option has
+# been renamed/removed across releases, and a VTE without the sixel sources
+# still exposes the enable-sixel API as a silent no-op. Check the built library
+# for both halves rather than just reporting success.
+LIB="$(find "$PREFIX/lib" -name 'libvte-2.91.so.0.*' -print -quit)"
+LIBDIR="$(dirname "$LIB")"
+VERIFY_FAILED=0
 
+if [ -z "$LIB" ]; then
+    echo "error: no libvte-2.91.so.0.* found under $PREFIX/lib" >&2
+    exit 1
+fi
+
+# Count rather than `grep -q`: under `set -o pipefail`, grep -q exits at the
+# first match, the producer takes SIGPIPE, and the pipeline reports failure —
+# so a successful match would look like a failed check.
+
+# 1. sixel implementation compiled in (these source paths only appear if it was)
+SIXEL_HITS="$(strings "$LIB" 2>/dev/null | grep -c 'src/sixel-context' || true)"
+if [ "$SIXEL_HITS" -eq 0 ]; then
+    echo "WARNING: built library has no sixel implementation compiled in." >&2
+    VERIFY_FAILED=1
+fi
+
+# 2. our drawing code present (hidden visibility, so look in the local symtab)
+DRAW_HITS="$(nm -C "$LIB" 2>/dev/null | grep -c 'Terminal::draw_images' || true)"
+if [ "$DRAW_HITS" -eq 0 ]; then
+    echo "WARNING: Terminal::draw_images() not found — the patch did not take effect." >&2
+    VERIFY_FAILED=1
+fi
+
+if [ "$VERIFY_FAILED" -ne 0 ]; then
+    echo "" >&2
+    echo "The build completed but will not display images. Please report this" >&2
+    echo "along with the VTE version above." >&2
+    exit 1
+fi
+
+echo ">>> Verified: sixel compiled in and draw_images() present"
+
+# --- done ------------------------------------------------------------------
 cat <<EOF
 
 Done. Patched VTE installed to: $PREFIX
