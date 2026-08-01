@@ -577,6 +577,21 @@ private:
 
         registerActionWithSettings(group, ACTION_PREFIX, ACTION_SELECT_ALL, gsShortcuts, delegate(GVariant, SimpleAction) { vte.selectAll(); });
         registerActionWithSettings(group, ACTION_PREFIX, ACTION_UNSELECT_ALL, gsShortcuts, delegate(GVariant, SimpleAction) { vte.unselectAll(); });
+        registerActionWithSettings(group, ACTION_PREFIX, ACTION_CLEAR, gsShortcuts, delegate(GVariant, SimpleAction) {
+            //Clear scrollback and on-screen output while leaving the current line intact
+            long totalRows = vte.getRowCount();
+            string toFeed = "";
+            //Move down past the bottom of the current buffer
+            foreach (i; 1 .. totalRows) toFeed ~= "\n";
+            //Clear scrollback buffer
+            toFeed ~= "\033[3J";
+            //Move cursor back up to where the prompt line now is
+            toFeed ~= format("\033[%dA", totalRows);
+            //Remove any text below the current line
+            if (totalRows > 1) toFeed ~= "\033[s\033[E\033[0J\033[u";
+            vte.reset(true, false);
+            vte.feed(toFeed);
+        });
 
         //Link Actions, no shortcuts, context menu only
         registerAction(group, ACTION_PREFIX, ACTION_COPY_LINK, null, delegate(GVariant, SimpleAction) {
@@ -1929,6 +1944,11 @@ private:
 
             mmContext.appendItem(clipItem);
         }
+
+        GMenu screenSection = new GMenu();
+        screenSection.append(_("Clear"), getActionDetailedName(ACTION_PREFIX, ACTION_CLEAR));
+        mmContext.appendSection(null, screenSection);
+
         //Check if titlebar is hidden and add extra items
         if (!bTitle.isVisible()) {
             GMenu windowSection = new GMenu();
