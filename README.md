@@ -26,8 +26,11 @@ Tilix is a tiling terminal emulator which uses the VTE GTK+ 3 widget with the fo
 * Custom hyperlinks
 * Automatic (triggered) profile switches based on hostname and directory
 * Supports notifications when processes are completed out of view. Requires the Fedora notification patches for VTE
-* Experimental trigger support (Requires patched VTE, see [wiki](https://github.com/gnunn1/tilix/wiki/Automatic-(Triggered)-Profile-Switching))
+* Trigger support: match regexes against terminal output to update titles/badges, send text, run commands, show
+  notifications, or (tilix-next) prompt to copy matched text to the clipboard — a safe alternative to OSC 52, since
+  it requires both a trigger you configured yourself and an explicit click, see [wiki](https://github.com/gnunn1/tilix/wiki/Automatic-(Triggered)-Profile-Switching)
 * Experimental badge support (Requires patched VTE, see [wiki](https://github.com/gnunn1/tilix/wiki/Badges))
+* (tilix-next) Optional Sixel image protocol support, so programs can draw images directly in the terminal (e.g. fastfetch/neofetch banners)
 
 The application was written using GTK 3 and an effort was made to conform to GNOME Human Interface Guidelines (HIG). As a result, it does use CSD (i.e. the GTK HeaderBar)
 though it can be disabled if necessary. Other than GNOME, only Unity has been tested officially though users have had success with other desktop environments.

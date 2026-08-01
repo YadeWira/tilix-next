@@ -1,3 +1,56 @@
+Version 1.9.7
+~~~~~~~~~~~~~~
+Released: 2026-08-01
+
+Notes:
+ * First tilix-next release: bug fixes and small features picked up from
+   gnunn1/tilix's open issues and pull requests while that project looks
+   for maintainers.
+
+Features:
+ * Add ClipboardPrompt trigger action, a safe alternative to OSC 52:
+   matches visible marker text (not raw escape sequences), decodes it,
+   and shows an InfoBar with Copy/Ignore buttons, never writing to the
+   clipboard without an explicit click. Includes contrib/tilix-copy.sh
+   helper script
+ * Add optional Sixel image protocol support, letting programs draw
+   images directly to the terminal (e.g. fastfetch/neofetch banners)
+ * Add GitHub Dark color scheme
+ * Add "Scale (fit)" background image mode
+ * Add option to remap Ctrl+Backspace (e.g. to Control-W, delete word)
+ * Add "Clear" action to clear terminal output while keeping the
+   current command line intact
+
+Bugfixes:
+ * Fix the entire Triggers feature (UpdateTitle, SendText,
+   SendNotification, etc.) never firing on any modern/stock VTE: the
+   contents-changed signal was wired up behind a check for a signal
+   that only ever existed on old, distro-patched VTE builds, and
+   gtk-d's getTextRange() wrapper always returns empty text on current
+   VTE due to a deprecated parameter it can't avoid passing
+ * Fix crash on OSC 7 sequences with hostnames GLib rejects (e.g.
+   starting with a digit, or containing "_"), such as from conda or
+   container shells
+ * Fix crash opening Keyboard Shortcuts on systems where GtkBuilder
+   hadn't already seen GtkShortcutsWindow registered
+ * Fix invisible drag-icon window blocking clicks after an interrupted
+   title-bar drag
+ * Fix crash when a terminal title contains an unescaped "&"
+ * Fix install.sh reporting the wrong missing package for some commands
+ * Fix build failing at link time with undefined references to
+   inflate/deflate/etc. (zlib wasn't linked explicitly)
+ * Work around a dmd template-emission bug that could break builds
+
+Miscellaneous:
+ * Spanish (es) translation completed to 100%
+ * po/LINGUAS fixed to include locale files that existed on disk but
+   weren't being shipped (da, et, hi, ka, pt, ta)
+ * README rewritten to reflect tilix-next as an actively maintained fork
+
+Contributors:
+ YadeWira, Tim Purschke, algj, Robert Ruse, Ruby Lazuli,
+ Andrei Horodniceanu, Hiroki Noda, taoky
+
 Version 1.9.6
 ~~~~~~~~~~~~~~
 Released: 2023-11-08
