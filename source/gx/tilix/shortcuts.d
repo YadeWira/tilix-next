@@ -17,6 +17,7 @@ import gtkc.gobject;
 
 import gtk.Builder;
 import gtk.ShortcutsGroup;
+import gtk.ShortcutsSection;
 import gtk.ShortcutsShortcut;
 import gtk.ShortcutsWindow;
 
@@ -29,6 +30,15 @@ import gx.tilix.preferences;
 public:
 
 ShortcutsWindow getShortcutWindow() {
+    // Force registration of these GTypes before parsing the resource below.
+    // On some systems (see gnunn1/tilix#2178) nothing has instantiated them
+    // yet by this point, and GtkBuilder fails with "Invalid object type
+    // 'GtkShortcutsWindow'" because it can't resolve a type it has never seen.
+    cast(void) ShortcutsWindow.getType();
+    cast(void) ShortcutsSection.getType();
+    cast(void) ShortcutsGroup.getType();
+    cast(void) ShortcutsShortcut.getType();
+
     Builder builder = new Builder();
     builder.setTranslationDomain(TILIX_DOMAIN);
     if (!builder.addFromResource(SHORTCUT_UI_RESOURCE)) {
