@@ -34,6 +34,13 @@ fix: 43 lines, no new logic, just connecting two halves that were already there.
 Verified on VTE 0.85.0 (master) with both `img2sixel` and `chafa -f sixel`, in
 Tilix and in VTE's own demo app.
 
+**GTK3 only.** The patch is guarded with `#if WITH_SIXEL && VTE_GTK == 3`
+because it paints through `m_draw.cairo()`, and `m_draw` is only a
+`DrawingCairo` in GTK3 builds — under GTK4 it is a `DrawingGsk`, which has no
+cairo context. A GTK4 build therefore compiles as before, without image
+drawing; wiring images up there means writing a second implementation against
+GSK (snapshot/texture) rather than cairo.
+
 ### Why a development snapshot, and not a stable release
 
 **No stable VTE release contains sixel at all.** Upstream carries the sixel

@@ -1,12 +1,12 @@
 diff --git a/src/vte.cc b/src/vte.cc
-index ab5ce63..c05b5ee 100644
+index ab5ce63..42721ee 100644
 --- a/src/vte.cc
 +++ b/src/vte.cc
 @@ -10141,6 +10141,41 @@ Terminal::widget_snapshot(GtkSnapshot* snapshot_object) noexcept
  
  #endif /* VTE_GTK == 4 */
  
-+#if WITH_SIXEL
++#if WITH_SIXEL && VTE_GTK == 3
 +
 +/* Paint any images stored in the ring that intersect the visible rows.
 + * The sixel parser decodes images and Ring stores them (with position and
@@ -39,7 +39,7 @@ index ab5ce63..c05b5ee 100644
 +        }
 +}
 +
-+#endif /* WITH_SIXEL */
++#endif /* WITH_SIXEL && VTE_GTK == 3 */
 +
  void
  Terminal::draw(cairo_region_t const* region) noexcept
@@ -48,7 +48,7 @@ index ab5ce63..c05b5ee 100644
                    m_cell_width,
                    m_cell_height);
  
-+#if WITH_SIXEL
++#if WITH_SIXEL && VTE_GTK == 3
 +        draw_images();
 +#endif
 +
@@ -56,14 +56,14 @@ index ab5ce63..c05b5ee 100644
  
          m_draw.unclip_border();
 diff --git a/src/vteinternal.hh b/src/vteinternal.hh
-index 76faa52..f1638d3 100644
+index 76faa52..e4ebb7a 100644
 --- a/src/vteinternal.hh
 +++ b/src/vteinternal.hh
 @@ -1173,6 +1173,9 @@ public:
                                  int blink_timeout_ms) noexcept;
  
          void draw(cairo_region_t const* region) noexcept;
-+#if WITH_SIXEL
++#if WITH_SIXEL && VTE_GTK == 3
 +        void draw_images() noexcept;
 +#endif
          vte::view::Rectangle cursor_rect();
