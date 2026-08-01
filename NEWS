@@ -13,8 +13,19 @@ Features:
    and shows an InfoBar with Copy/Ignore buttons, never writing to the
    clipboard without an explicit click. Includes contrib/tilix-copy.sh
    helper script
- * Add optional Sixel image protocol support, letting programs draw
-   images directly to the terminal (e.g. fastfetch/neofetch banners)
+ * Add optional Sixel image protocol support, letting programs draw real
+   images directly in the terminal (img2sixel, chafa -f sixel, etc.).
+   Off by default, enabled per profile under Compatibility.
+   This also required fixing VTE itself, which decodes and stores sixel
+   images but never draws them, leaving a correctly-sized blank gap
+   where the picture should be: patches/vte-draw-sixel-images.patch
+   supplies the missing drawing code (43 lines, calling VTE's own
+   already-written Image::paint()), and contrib/build-vte-sixel.sh
+   builds a patched VTE into a private prefix without touching the
+   system one. See the README and patches/README.md.
+   Note that VTE 0.76.0, which Debian/Ubuntu ship, contains no sixel
+   code at all — upstream deleted the sixel sources for that single
+   release and restored them in 0.77.0
  * Add GitHub Dark color scheme
  * Add "Scale (fit)" background image mode
  * Add option to remap Ctrl+Backspace (e.g. to Control-W, delete word)

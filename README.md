@@ -30,7 +30,7 @@ Tilix is a tiling terminal emulator which uses the VTE GTK+ 3 widget with the fo
   notifications, or (tilix-next) prompt to copy matched text to the clipboard — a safe alternative to OSC 52, since
   it requires both a trigger you configured yourself and an explicit click, see [wiki](https://github.com/gnunn1/tilix/wiki/Automatic-(Triggered)-Profile-Switching)
 * Experimental badge support (Requires patched VTE, see [wiki](https://github.com/gnunn1/tilix/wiki/Badges))
-* (tilix-next) Optional Sixel image protocol support, so programs can draw images directly in the terminal (e.g. fastfetch/neofetch banners)
+* (tilix-next) Optional Sixel image protocol support, so programs can draw real images directly in the terminal — see [Images (Sixel)](#images-sixel) for the VTE requirements
 
 The application was written using GTK 3 and an effort was made to conform to GNOME Human Interface Guidelines (HIG). As a result, it does use CSD (i.e. the GTK HeaderBar)
 though it can be disabled if necessary. Other than GNOME, only Unity has been tested officially though users have had success with other desktop environments.
@@ -72,6 +72,45 @@ In some of the screenshots, the `powerline` statusline shell plugin is used. In 
 and ensure Tilix is aware of them. They can be installed via `sudo apt install fonts-powerline` on Debian/Ubuntu and `sudo dnf install powerline-fonts` on Fedora/RedHat-based
 Linux distributions.
 After installing the fonts, select the "Powerline Symbols" font in Tilix via **Preferences -> Default -> Custom Font**. Sessions are updated automatically.
+
+### Images (Sixel)
+
+Tilix can display real images inline via the Sixel protocol (`img2sixel foo.png`, `chafa -f sixel foo.png`, and anything else
+that emits sixel). Turn it on per profile under **Preferences → Profile → Compatibility → "Enable Sixel image support"**; it is
+off by default, matching VTE's own default.
+
+**This needs a VTE that can actually draw images, which no distro currently ships.** Two separate upstream gaps are in the way:
+
+1. `sixel` is a VTE build option that defaults to `false`, so distro packages have it compiled out. VTE **0.76.0** in particular
+   contains no sixel code at all — upstream deleted the sixel sources for that one release and restored them in 0.77.0 — so on
+   Debian/Ubuntu the `enable-sixel` API exists but is a silent no-op.
+2. Even with `-Dsixel=true`, VTE decodes sixel images and stores them, but **never draws them**: the cursor advances past a
+   correctly-sized blank gap where the picture should be. `patches/vte-draw-sixel-images.patch` in this repository fixes that in
+   43 lines by calling VTE's own already-written `Image::paint()` from the drawing code.
+
+The Tilix side works as soon as it is given such a VTE; nothing else is needed here.
+
+#### Option 1: build it with the provided script (recommended)
+
+```
+./contrib/build-vte-sixel.sh
+```
+
+Clones VTE at a pinned commit, applies the patch, and installs to `~/.local/vte-sixel` (pass a different prefix as the first
+argument). Your system VTE is not touched. Then:
+
+```
+LD_LIBRARY_PATH="$HOME/.local/vte-sixel/lib/x86_64-linux-gnu" tilix
+```
+
+#### Option 2: build it by hand
+
+If you would rather drive it yourself, or need to adapt it to a distro other than Debian/Ubuntu, the equivalent manual steps —
+dependencies, the GCC 14 requirement, meson flags, and how to verify the result — are written out in
+[patches/README.md](patches/README.md).
+
+To make it permanent, set `LD_LIBRARY_PATH` in your `.desktop` launcher or a shell wrapper. To undo everything, delete the prefix
+directory; nothing outside it was modified.
 
 ### Support
 
