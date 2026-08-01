@@ -81,9 +81,11 @@ off by default, matching VTE's own default.
 
 **This needs a VTE that can actually draw images, which no distro currently ships.** Two separate upstream gaps are in the way:
 
-1. `sixel` is a VTE build option that defaults to `false`, so distro packages have it compiled out. VTE **0.76.0** in particular
-   contains no sixel code at all — upstream deleted the sixel sources for that one release and restored them in 0.77.0 — so on
-   Debian/Ubuntu the `enable-sixel` API exists but is a silent no-op.
+1. **No stable VTE release contains sixel at all.** Upstream carries the sixel sources in `master` and strips them again right
+   before every release, restoring them afterwards — so 0.76.x through 0.84.1 all ship without a single sixel file, without the
+   `sixel` meson option, and without `image.cc`. On those builds `vte_terminal_set_enable_sixel()` exists as an API symbol but is
+   a silent no-op. (`sixel` is additionally a build option defaulting to `false`, so even the development snapshots that do carry
+   the code have it compiled out unless asked for.)
 2. Even with `-Dsixel=true`, VTE decodes sixel images and stores them, but **never draws them**: the cursor advances past a
    correctly-sized blank gap where the picture should be. `patches/vte-draw-sixel-images.patch` in this repository fixes that in
    43 lines by calling VTE's own already-written `Image::paint()` from the drawing code.
@@ -111,6 +113,15 @@ dependencies, the GCC 14 requirement, meson flags, and how to verify the result 
 
 To make it permanent, set `LD_LIBRARY_PATH` in your `.desktop` launcher or a shell wrapper. To undo everything, delete the prefix
 directory; nothing outside it was modified.
+
+#### A word on stability
+
+Since sixel exists only in VTE's development branch, this necessarily builds a development snapshot rather than a release — the
+build even prints *"This is an unstable development release!"*. Two things keep that contained: the script pins one specific
+commit, so the result is reproducible instead of whatever `master` happens to be today, and the library is installed into a
+private prefix that only the Tilix you launch with `LD_LIBRARY_PATH` will load. Your system VTE, and therefore every other
+terminal on the machine, is untouched. If Tilix starts behaving oddly after this, suspect the VTE swap first and just drop the
+`LD_LIBRARY_PATH` to get back to the distro library.
 
 ### Support
 

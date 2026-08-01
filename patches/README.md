@@ -34,16 +34,33 @@ fix: 43 lines, no new logic, just connecting two halves that were already there.
 Verified on VTE 0.85.0 (master) with both `img2sixel` and `chafa -f sixel`, in
 Tilix and in VTE's own demo app.
 
-### Also note
+### Why a development snapshot, and not a stable release
 
-VTE **0.76.0 specifically has no sixel code at all** — upstream deleted the
-sixel sources for that release (present in 0.69.90–0.75.0, gone in 0.75.92 and
-0.76.0, restored in 0.77.0). Debian/Ubuntu ship 0.76.0, so on those systems
-`vte_terminal_set_enable_sixel()` exists but is a no-op stub. Building against
-0.77.0 or newer is required before this patch is even relevant.
+**No stable VTE release contains sixel at all.** Upstream carries the sixel
+sources in `master` during development and strips them again immediately before
+every release, then restores them afterwards:
 
-`sixel` is also a meson option defaulting to `false`, so distro builds have it
-off regardless.
+| Tag                                        | sixel sources |
+| ------------------------------------------ | ------------- |
+| 0.77.0, 0.79.0, 0.81.0 (mid-cycle dev tags) | present       |
+| 0.81.90, 0.83.90, 0.83.91 (release candidates) | **removed** |
+| 0.76.x … 0.84.1 (every stable release)      | **removed**   |
+| `master` (0.85.0-dev)                       | present       |
+
+Checked with `git ls-tree -r --name-only <tag> | grep -i sixel`. VTE 0.84.1, the
+newest stable at time of writing, has no sixel files, no `sixel` meson option,
+no `image.cc`, and no `insert_image()` in `vte.cc` — the entire image subsystem
+is absent. On such builds `vte_terminal_set_enable_sixel()` still exists as an
+API symbol but is a silent no-op stub, which is what Debian/Ubuntu ship.
+
+So pinning this to a stable release is not an option that exists; it is a
+development snapshot or nothing. `contrib/build-vte-sixel.sh` pins one specific
+master commit so the result is at least reproducible rather than a moving
+target, and the build is installed into a private prefix used only by Tilix via
+`LD_LIBRARY_PATH`, so nothing else on the system is exposed to it.
+
+`sixel` is also a meson option defaulting to `false`, so even the snapshots that
+do contain the code have it compiled out unless you ask for it.
 
 ### Applying
 
