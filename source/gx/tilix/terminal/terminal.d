@@ -2654,7 +2654,11 @@ private:
             return;
         }
         trace("Current directory: " ~ cwd);
-        directory = URI.filenameFromUri(cwd, hostname);
+        try {
+            directory = URI.filenameFromUri(cwd, hostname);
+        } catch (Exception e) {
+            warning(format(_("Could not parse current directory URI '%s' due to error '%s'"), cwd, e.msg));
+        }
     }
 
     /**
@@ -3420,7 +3424,12 @@ private:
                         trace("Converted filename " ~ filename);
                     } else {
                         string hostname;
-                        filename = URI.filenameFromUri(uri, hostname);
+                        try {
+                            filename = URI.filenameFromUri(uri, hostname);
+                        } catch (Exception e) {
+                            warning(format(_("Could not parse dropped URI '%s' due to error '%s'"), uri, e.msg));
+                            continue;
+                        }
                     }
                     string quoted = ShellUtils.shellQuote(filename) ~ " ";
                     vte.feedChild(quoted);
