@@ -1,0 +1,71 @@
+diff --git a/src/vte.cc b/src/vte.cc
+index ab5ce63..c05b5ee 100644
+--- a/src/vte.cc
++++ b/src/vte.cc
+@@ -10141,6 +10141,41 @@ Terminal::widget_snapshot(GtkSnapshot* snapshot_object) noexcept
+ 
+ #endif /* VTE_GTK == 4 */
+ 
++#if WITH_SIXEL
++
++/* Paint any images stored in the ring that intersect the visible rows.
++ * The sixel parser decodes images and Ring stores them (with position and
++ * overdraw invalidation), but nothing ever drew them; this closes that gap.
++ */
++void
++Terminal::draw_images() noexcept
++{
++        auto const cr = m_draw.cairo();
++        if (!cr)
++                return;
++
++        auto const first_row = first_displayed_row();
++        auto const last_row = last_displayed_row();
++
++        /* image_map is keyed by priority, which is also the intended draw order */
++        for (auto const& entry : m_screen->row_data->image_map()) {
++                auto const image = entry.second.get();
++                if (!image)
++                        continue;
++
++                /* Skip images entirely above or below the viewport */
++                if (image->get_bottom() < first_row || image->get_top() > last_row)
++                        continue;
++
++                auto const offset_x = int(image->get_left() * m_cell_width);
++                auto const offset_y = int(row_to_pixel(image->get_top()));
++
++                image->paint(cr, offset_x, offset_y, m_cell_width, m_cell_height);
++        }
++}
++
++#endif /* WITH_SIXEL */
++
+ void
+ Terminal::draw(cairo_region_t const* region) noexcept
+ {
+@@ -10211,6 +10246,10 @@ Terminal::draw(cairo_region_t const* region) noexcept
+                   m_cell_width,
+                   m_cell_height);
+ 
++#if WITH_SIXEL
++        draw_images();
++#endif
++
+ 	paint_im_preedit_string();
+ 
+         m_draw.unclip_border();
+diff --git a/src/vteinternal.hh b/src/vteinternal.hh
+index 76faa52..f1638d3 100644
+--- a/src/vteinternal.hh
++++ b/src/vteinternal.hh
+@@ -1173,6 +1173,9 @@ public:
+                                 int blink_timeout_ms) noexcept;
+ 
+         void draw(cairo_region_t const* region) noexcept;
++#if WITH_SIXEL
++        void draw_images() noexcept;
++#endif
+         vte::view::Rectangle cursor_rect();
+         void paint_cursor();
+         void paint_im_preedit_string();
