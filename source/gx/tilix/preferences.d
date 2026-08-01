@@ -262,6 +262,7 @@ immutable string SETTINGS_PROFILE_TRIGGER_SEND_TEXT_VALUE = N_("SendText");
 immutable string SETTINGS_PROFILE_TRIGGER_INSERT_PASSWORD_VALUE = N_("InsertPassword");
 immutable string SETTINGS_PROFILE_TRIGGER_UPDATE_BADGE_VALUE = N_("UpdateBadge");
 immutable string SETTINGS_PROFILE_TRIGGER_RUN_PROCESS_VALUE = N_("RunProcess");
+immutable string SETTINGS_PROFILE_TRIGGER_CLIPBOARD_PROMPT_VALUE = N_("ClipboardPrompt");
 
 immutable string[] SETTINGS_PROFILE_TRIGGER_ACTION_VALUES = [SETTINGS_PROFILE_TRIGGER_UPDATE_STATE_VALUE,
                                                              SETTINGS_PROFILE_TRIGGER_EXECUTE_COMMAND_VALUE,
@@ -271,7 +272,8 @@ immutable string[] SETTINGS_PROFILE_TRIGGER_ACTION_VALUES = [SETTINGS_PROFILE_TR
                                                              SETTINGS_PROFILE_TRIGGER_SEND_TEXT_VALUE,
                                                              SETTINGS_PROFILE_TRIGGER_INSERT_PASSWORD_VALUE,
                                                              SETTINGS_PROFILE_TRIGGER_UPDATE_BADGE_VALUE,
-                                                             SETTINGS_PROFILE_TRIGGER_RUN_PROCESS_VALUE];
+                                                             SETTINGS_PROFILE_TRIGGER_RUN_PROCESS_VALUE,
+                                                             SETTINGS_PROFILE_TRIGGER_CLIPBOARD_PROMPT_VALUE];
 
 //Badges
 enum SETTINGS_PROFILE_BADGE_TEXT_KEY = "badge-text";

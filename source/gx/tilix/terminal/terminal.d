@@ -13,6 +13,7 @@ import core.sys.posix.unistd;
 
 import std.algorithm;
 import std.array;
+import std.base64;
 import std.conv;
 import std.concurrency;
 import std.csv;
@@ -1762,7 +1763,44 @@ private:
                 auto response = executeShell(process);
                 vte.feedChild(response.output);
                 break;
+            case TriggerAction.CLIPBOARD_PROMPT:
+                string encoded = replaceMatchTokens(trigger.parameters, groups).strip();
+                string decoded;
+                try {
+                    decoded = cast(string) Base64.decode(encoded);
+                } catch (Exception e) {
+                    warning(format(_("Could not decode clipboard trigger payload due to error '%s'"), e.msg));
+                    break;
+                }
+                if (decoded.length > 0) {
+                    showClipboardPromptInfoBar(decoded);
+                }
+                break;
         }
+    }
+
+    /**
+     * Shows an InfoBar asking the user to confirm before copying trigger-supplied
+     * text to the clipboard. Unlike OSC 52, this is opt-in (the user must have
+     * configured the trigger themselves) and never writes to the clipboard
+     * without an explicit click, so a malicious/misbehaving remote program
+     * cannot silently overwrite the user's clipboard.
+     */
+    void showClipboardPromptInfoBar(string text) {
+        enum PREVIEW_LENGTH = 80;
+        string preview = text.replace("\n", "⏎ ");
+        if (preview.length > PREVIEW_LENGTH) {
+            preview = preview[0 .. PREVIEW_LENGTH] ~ "…";
+        }
+        ClipboardPromptInfoBar ib = new ClipboardPromptInfoBar(preview);
+        ib.addOnResponse(delegate(int response, InfoBar infoBar) {
+            if (response == ResponseType.OK) {
+                Clipboard.get(null).setText(text, to!int(text.length));
+            }
+            terminalOverlay.remove(infoBar);
+        });
+        terminalOverlay.addOverlay(ib);
+        ib.showAll();
     }
 
 private:
@@ -4335,6 +4373,29 @@ public:
     }
 }
 
+/**
+ * InfoBar prompting the user to confirm a clipboard write requested by a
+ * ClipboardPrompt trigger. Requires an explicit "Copy" click; dismissing or
+ * ignoring it never touches the clipboard.
+ */
+package class ClipboardPromptInfoBar : InfoBar {
+
+public:
+    this(string preview) {
+        super([_("Copy"), _("Ignore")], [ResponseType.OK, ResponseType.CANCEL]);
+        Label lblPrompt = new Label(format(_("Terminal wants to copy to clipboard: %s"), preview));
+        lblPrompt.setHalign(GtkAlign.START);
+        lblPrompt.setLineWrap(true);
+        getContentArea().packStart(lblPrompt, true, true, 0);
+        setHalign(GtkAlign.FILL);
+        setValign(GtkAlign.START);
+        addOnMap(delegate(Widget) {
+            setDefaultResponse(ResponseType.CANCEL);
+            setMessageType(MessageType.QUESTION);
+        }, ConnectFlags.AFTER);
+    }
+}
+
 
 
 /**
@@ -4410,7 +4471,8 @@ enum TriggerAction {
     SEND_TEXT,
     INSERT_PASSWORD,
     UPDATE_BADGE,
-    RUN_PROCESS
+    RUN_PROCESS,
+    CLIPBOARD_PROMPT
 }
 
 /**
@@ -4456,6 +4518,9 @@ public:
                 break;
             case SETTINGS_PROFILE_TRIGGER_RUN_PROCESS_VALUE:
                 action = TriggerAction.RUN_PROCESS;
+                break;
+            case SETTINGS_PROFILE_TRIGGER_CLIPBOARD_PROMPT_VALUE:
+                action = TriggerAction.CLIPBOARD_PROMPT;
                 break;
             default:
                 break;
