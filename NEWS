@@ -1,11 +1,11 @@
-Version 1.9.7
-~~~~~~~~~~~~~~
+Version 1.9.7-alpha
+~~~~~~~~~~~~~~~~~~~
 Released: 2026-08-01
 
 Notes:
- * First tilix-next release: bug fixes and small features picked up from
-   gnunn1/tilix's open issues and pull requests while that project looks
-   for maintainers.
+ * First tilix-next release, marked alpha: bug fixes and small features
+   picked up from gnunn1/tilix's open issues and pull requests while
+   that project looks for maintainers.
 
 Features:
  * Add ClipboardPrompt trigger action, a safe alternative to OSC 52:
@@ -23,9 +23,10 @@ Features:
    already-written Image::paint()), and contrib/build-vte-sixel.sh
    builds a patched VTE into a private prefix without touching the
    system one. See the README and patches/README.md.
-   Note that VTE 0.76.0, which Debian/Ubuntu ship, contains no sixel
-   code at all — upstream deleted the sixel sources for that single
-   release and restored them in 0.77.0
+   Note that no stable VTE release contains sixel at all: upstream
+   strips the sixel sources before every release and restores them
+   afterwards, so 0.76.x through 0.84.1 ship without them and the
+   enable-sixel API is a silent no-op there
  * Add GitHub Dark color scheme
  * Add "Scale (fit)" background image mode
  * Add option to remap Ctrl+Backspace (e.g. to Control-W, delete word)

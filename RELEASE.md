@@ -8,7 +8,7 @@ Tilix Release Notes
 `git shortlog 1.9.6.. | grep -i -v trivial | grep -v Merge > NEWS.new`
 
 ```
-Version 1.9.7
+Version 1.9.7-alpha
 ~~~~~~~~~~~~~~
 Released: 2024-xx-xx
 
@@ -29,8 +29,8 @@ Contributors:
 
 5. Commit NEWS and other changes to Git, tag release:
 ```
-git commit -a -m "Release version 1.9.7"
-git tag -s -f -m "Release 1.9.7" 1.9.7 <gpg password>
+git commit -a -m "Release version 1.9.7-alpha"
+git tag -s -f -m "Release 1.9.7-alpha" 1.9.7-alpha <gpg password>
 git push --tags
 git push
 ```
