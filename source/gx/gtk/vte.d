@@ -93,7 +93,8 @@ string getVTEVersion() {
 enum TerminalFeature {
     EVENT_NOTIFICATION,
     EVENT_SCREEN_CHANGED,
-    DISABLE_BACKGROUND_DRAW
+    DISABLE_BACKGROUND_DRAW,
+    SIXEL
 }
 
 private static bool g_vteTerminalLoaded = false;
@@ -106,11 +107,13 @@ bool checkVTEFeature(TerminalFeature feature) {
     // due to need for GTK to load first
     if (!featuresInitialized) {
         import vte.c.functions;
+        import vte.c.types : VteTerminal;
 
         // Force terminal to be loaded if not done already
+        VteTerminal* terminal;
         if (!g_vteTerminalLoaded) {
             g_vteTerminalLoaded = true;
-            auto terminal = vte_terminal_new ();
+            terminal = cast(VteTerminal*) vte_terminal_new ();
         }
 
         // Check if patched events are available
@@ -133,6 +136,19 @@ bool checkVTEFeature(TerminalFeature feature) {
                 terminalFeatures[TerminalFeature.DISABLE_BACKGROUND_DRAW] = false;
             }
             tracef("VTE function %s could not be linked", failure);
+        }
+
+        // The enable-sixel getter/setter symbols exist even on VTE builds
+        // where sixel support itself was compiled out (e.g. Ubuntu/Debian's
+        // packages, built with -Dsixel=false); on those, the setter silently
+        // refuses to turn it on. Do a real set/get round-trip on a throwaway
+        // terminal instead of trusting symbol presence.
+        if (terminal !is null) {
+            vte_terminal_set_enable_sixel(terminal, true);
+            terminalFeatures[TerminalFeature.SIXEL] = vte_terminal_get_enable_sixel(terminal) != 0;
+            vte_terminal_set_enable_sixel(terminal, false);
+        } else {
+            terminalFeatures[TerminalFeature.SIXEL] = false;
         }
         featuresInitialized = true;
     }

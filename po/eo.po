@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tilix\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-01 15:04-0500\n"
+"POT-Creation-Date: 2026-08-01 15:32-0500\n"
 "PO-Revision-Date: 2021-04-13 01:26+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/tilix/"
@@ -1199,7 +1199,7 @@ msgstr "Malfermi…"
 
 #: source/gx/tilix/appwindow.d:690 source/gx/tilix/appwindow.d:1558
 #: source/gx/tilix/prefeditor/profileeditor.d:948
-#: source/gx/tilix/terminal/terminal.d:3779
+#: source/gx/tilix/terminal/terminal.d:3784
 msgid "Save"
 msgstr "Konservi"
 
@@ -1246,7 +1246,7 @@ msgstr "Ĉiuj dosieroj JSON"
 #: source/gx/tilix/appwindow.d:1465
 #: source/gx/tilix/prefeditor/prefdialog.d:1219
 #: source/gx/tilix/prefeditor/profileeditor.d:965
-#: source/gx/tilix/terminal/terminal.d:3789
+#: source/gx/tilix/terminal/terminal.d:3794
 msgid "All Files"
 msgstr "Ĉiuj Dosieroj"
 
@@ -1268,7 +1268,7 @@ msgstr "Ŝargi Seancon"
 #: source/gx/tilix/terminal/advpaste.d:137 source/gx/tilix/terminal/layout.d:33
 #: source/gx/tilix/terminal/password.d:371
 #: source/gx/tilix/terminal/password.d:493
-#: source/gx/tilix/terminal/terminal.d:3779
+#: source/gx/tilix/terminal/terminal.d:3784
 msgid "Cancel"
 msgstr "Nuligi"
 
@@ -1370,7 +1370,7 @@ msgstr "Elekti Dosierujon"
 #: source/gx/tilix/bookmark/manager.d:687
 #: source/gx/tilix/prefeditor/advdialog.d:106
 #: source/gx/tilix/prefeditor/profileeditor.d:98
-#: source/gx/tilix/prefeditor/profileeditor.d:1145
+#: source/gx/tilix/prefeditor/profileeditor.d:1154
 #: source/gx/tilix/terminal/layout.d:89
 msgid "Command"
 msgstr "Komando"
@@ -1725,14 +1725,14 @@ msgstr "Usklecoblinde"
 
 #: source/gx/tilix/prefeditor/advdialog.d:134
 #: source/gx/tilix/prefeditor/advdialog.d:313
-#: source/gx/tilix/prefeditor/profileeditor.d:1312
+#: source/gx/tilix/prefeditor/profileeditor.d:1321
 msgid "Add"
 msgstr "Aldoni"
 
 #: source/gx/tilix/prefeditor/advdialog.d:141
 #: source/gx/tilix/prefeditor/advdialog.d:319
 #: source/gx/tilix/prefeditor/prefdialog.d:556
-#: source/gx/tilix/prefeditor/profileeditor.d:1349
+#: source/gx/tilix/prefeditor/profileeditor.d:1358
 #: source/gx/tilix/terminal/password.d:213
 msgid "Delete"
 msgstr "Forigi"
@@ -1807,7 +1807,7 @@ msgstr ""
 
 #: source/gx/tilix/prefeditor/common.d:46
 #: source/gx/tilix/prefeditor/common.d:77
-#: source/gx/tilix/prefeditor/profileeditor.d:1330
+#: source/gx/tilix/prefeditor/profileeditor.d:1339
 #: source/gx/tilix/terminal/password.d:184
 msgid "Edit"
 msgstr "Redakti"
@@ -2256,7 +2256,7 @@ msgstr "Kongrueco"
 
 #: source/gx/tilix/prefeditor/profileeditor.d:103
 #: source/gx/tilix/prefeditor/profileeditor.d:693
-#: source/gx/tilix/prefeditor/profileeditor.d:1184
+#: source/gx/tilix/prefeditor/profileeditor.d:1193
 #: source/gx/tilix/terminal/layout.d:68
 msgid "Badge"
 msgstr "Ŝildo"
@@ -2328,7 +2328,7 @@ msgid "Unfocused"
 msgstr "Sen fokuso"
 
 #: source/gx/tilix/prefeditor/profileeditor.d:380
-#: source/gx/tilix/prefeditor/profileeditor.d:1208
+#: source/gx/tilix/prefeditor/profileeditor.d:1217
 msgid "Custom font"
 msgstr "Propra tiparo"
 
@@ -2601,70 +2601,78 @@ msgstr "Mallarĝa"
 msgid "Wide"
 msgstr "Larĝa"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1135
+#: source/gx/tilix/prefeditor/profileeditor.d:1119
+msgid "Enable Sixel image support (e.g. fastfetch/neofetch banners)"
+msgstr ""
+
+#: source/gx/tilix/prefeditor/profileeditor.d:1123
+msgid "Not supported by the installed version of VTE"
+msgstr ""
+
+#: source/gx/tilix/prefeditor/profileeditor.d:1144
 msgid "Run command as a login shell"
 msgstr "Ruli komandon kiel salutŝelon"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1139
+#: source/gx/tilix/prefeditor/profileeditor.d:1148
 msgid "Run a custom command instead of my shell"
 msgstr "Ruli propran komandon anstataŭ mia ŝelo"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1156
+#: source/gx/tilix/prefeditor/profileeditor.d:1165
 msgid "When command exits"
 msgstr "Kiam komando finiĝas"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Exit the terminal"
 msgstr "Fermi la terminalon"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Hold the terminal open"
 msgstr "Lasi la terminalon malfermita"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Restart the command"
 msgstr "Reruli la komandon"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1198
+#: source/gx/tilix/prefeditor/profileeditor.d:1207
 msgid "Badge position"
 msgstr "Loko de ŝildo"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Northeast"
 msgstr "Nordorienta"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Northwest"
 msgstr "Nordokcidenta"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Southeast"
 msgstr "Sudorienta"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Southwest"
 msgstr "Sudokcidenta"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1220
+#: source/gx/tilix/prefeditor/profileeditor.d:1229
 msgid "Choose A Badge Font"
 msgstr "Elektu Tiparon de Ŝildo"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1258
+#: source/gx/tilix/prefeditor/profileeditor.d:1267
 msgid "Notify New Activity"
 msgstr "Sciigi pri Nova Aktiveco"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1265
+#: source/gx/tilix/prefeditor/profileeditor.d:1274
 msgid ""
 "A notification can be raised when new activity occurs after a specified "
 "period of silence."
 msgstr ""
 "Sciigo povas okazi, kiam nova aktiveco ekas post specifa daŭro da silento."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1278
+#: source/gx/tilix/prefeditor/profileeditor.d:1287
 msgid "Automatic Profile Switching"
 msgstr "Aŭtomata Ŝanĝado de Profiloj"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1287
+#: source/gx/tilix/prefeditor/profileeditor.d:1296
 msgid ""
 "Profiles are automatically selected based on the values entered here.\n"
 "Values are entered using a <i>username@hostname:directory</i> format. Either "
@@ -2676,7 +2684,7 @@ msgstr ""
 "gastiganto aŭ la dosierujo esti preterlasebla (sed ne ambaŭ samtempe); la "
 "dupunkto devas ĉeesti."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1289
+#: source/gx/tilix/prefeditor/profileeditor.d:1298
 msgid ""
 "Profiles are automatically selected based on the values entered here.\n"
 "Values are entered using a <i>hostname:directory</i> format. Either the "
@@ -2688,43 +2696,43 @@ msgstr ""
 "aŭ la dosierujo esti preterlasebla (sed ne ambaŭ samtempe); la dupunkto "
 "devas ĉeesti."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1301
+#: source/gx/tilix/prefeditor/profileeditor.d:1310
 msgid "Match"
 msgstr "Kongruaĵo"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1316
+#: source/gx/tilix/prefeditor/profileeditor.d:1325
 msgid "Enter username@hostname:directory to match"
 msgstr "Tajpu kongruaĵon salutnomo@gastiganto:dosierujo"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1318
+#: source/gx/tilix/prefeditor/profileeditor.d:1327
 msgid "Enter hostname:directory to match"
 msgstr "Tajpu kongruaĵon gastiganto:dosierujo"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1320
+#: source/gx/tilix/prefeditor/profileeditor.d:1329
 msgid "Add New Match"
 msgstr "Aldoni Novan Kongruaĵon"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1337
+#: source/gx/tilix/prefeditor/profileeditor.d:1346
 msgid "Edit username@hostname:directory to match"
 msgstr "Redakti kongruaĵon salutnomo@gastiganto:dosierujo"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1339
+#: source/gx/tilix/prefeditor/profileeditor.d:1348
 msgid "Edit hostname:directory to match"
 msgstr "Redakti kongruaĵon gastiganto:dosierujo"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1341
+#: source/gx/tilix/prefeditor/profileeditor.d:1350
 msgid "Edit Match"
 msgstr "Redakti Kongruaĵon"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1372
+#: source/gx/tilix/prefeditor/profileeditor.d:1381
 msgid "Enable by default"
 msgstr "Ŝalti implicite"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1381
+#: source/gx/tilix/prefeditor/profileeditor.d:1390
 msgid "Threshold for continuous silence"
 msgstr "Sojlo de kontinua silento"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1390
+#: source/gx/tilix/prefeditor/profileeditor.d:1399
 msgid "(seconds)"
 msgstr "(sekundoj)"
 
@@ -2747,48 +2755,48 @@ msgstr "Fenestro"
 msgid "Help"
 msgstr "Helpo"
 
-#: source/gx/tilix/preferences.d:260
+#: source/gx/tilix/preferences.d:261
 msgid "UpdateState"
 msgstr "Ŝanĝi Staton"
 
-#: source/gx/tilix/preferences.d:261
+#: source/gx/tilix/preferences.d:262
 msgid "ExecuteCommand"
 msgstr "Ruli Komandon"
 
-#: source/gx/tilix/preferences.d:262
+#: source/gx/tilix/preferences.d:263
 msgid "SendNotification"
 msgstr "Sendi Sciigon"
 
-#: source/gx/tilix/preferences.d:263
+#: source/gx/tilix/preferences.d:264
 msgid "UpdateTitle"
 msgstr "Ŝanĝi Titolon"
 
-#: source/gx/tilix/preferences.d:264
+#: source/gx/tilix/preferences.d:265
 msgid "PlayBell"
 msgstr "Pepigi"
 
-#: source/gx/tilix/preferences.d:265
+#: source/gx/tilix/preferences.d:266
 msgid "SendText"
 msgstr "Sendi Tekston"
 
-#: source/gx/tilix/preferences.d:266
+#: source/gx/tilix/preferences.d:267
 msgid "InsertPassword"
 msgstr "Enmeti Pasvorton"
 
-#: source/gx/tilix/preferences.d:267
+#: source/gx/tilix/preferences.d:268
 msgid "UpdateBadge"
 msgstr "Ĝisdatigi Ŝildon"
 
-#: source/gx/tilix/preferences.d:268
+#: source/gx/tilix/preferences.d:269
 msgid "RunProcess"
 msgstr "Ruli Procezon"
 
-#: source/gx/tilix/preferences.d:269
+#: source/gx/tilix/preferences.d:270
 #, fuzzy
 msgid "ClipboardPrompt"
 msgstr "Tondujo"
 
-#: source/gx/tilix/preferences.d:380
+#: source/gx/tilix/preferences.d:381
 #, c-format
 msgid "%s (Copy)"
 msgstr "%s (Kopio)"
@@ -3061,7 +3069,7 @@ msgstr "Kopii Adreson de Ligo"
 
 #: source/gx/tilix/terminal/terminal.d:1911
 #: source/gx/tilix/terminal/terminal.d:1921
-#: source/gx/tilix/terminal/terminal.d:4424
+#: source/gx/tilix/terminal/terminal.d:4429
 msgid "Copy"
 msgstr "Kopii"
 
@@ -3102,7 +3110,7 @@ msgid "Remote File URI Unsupported"
 msgstr "Fora dosiera URI ne estas subtenata"
 
 #: source/gx/tilix/terminal/terminal.d:2154
-#: source/gx/tilix/terminal/terminal.d:2708
+#: source/gx/tilix/terminal/terminal.d:2713
 #, c-format
 msgid "Custom link regex '%s' has an error, ignoring"
 msgstr "Propra regula esprimo por ligo '%s' enhavas eraron kaj tial ignoriĝis"
@@ -3120,74 +3128,74 @@ msgstr "Malsukcesis malfermi kongruaĵon '%s'"
 msgid "Error Opening Match"
 msgstr "Eraro pri Malfermado de Kongruaĵo"
 
-#: source/gx/tilix/terminal/terminal.d:2668
+#: source/gx/tilix/terminal/terminal.d:2673
 #, c-format
 msgid "Unexpected error occurred when adding link regex: %s"
 msgstr "Neatendita eraro okazis dum aldonado de regula esprimo pri ligo: %s"
 
-#: source/gx/tilix/terminal/terminal.d:2755
+#: source/gx/tilix/terminal/terminal.d:2760
 #, fuzzy, c-format
 msgid "Could not parse current directory URI '%s' due to error '%s'"
 msgstr "Malsukcesis kontroli la dosieron '%s' pro eraro '%s'"
 
-#: source/gx/tilix/terminal/terminal.d:2872
+#: source/gx/tilix/terminal/terminal.d:2877
 msgid "Unexpected error occurred, no additional information available"
 msgstr "Neatendita eraro okazis; neniu plia informo disponeblas"
 
-#: source/gx/tilix/terminal/terminal.d:2882
+#: source/gx/tilix/terminal/terminal.d:2887
 #, c-format
 msgid "Unexpected error occurred: %s"
 msgstr "Neatendita eraro okazis: %s"
 
-#: source/gx/tilix/terminal/terminal.d:3525
+#: source/gx/tilix/terminal/terminal.d:3530
 #, fuzzy, c-format
 msgid "Could not parse dropped URI '%s' due to error '%s'"
 msgstr "Malsukcesis kontroli la dosieron '%s' pro eraro '%s'"
 
-#: source/gx/tilix/terminal/terminal.d:3776
+#: source/gx/tilix/terminal/terminal.d:3781
 msgid "Save Terminal Output"
 msgstr "Konservi la Eligaĵon de Terminalo"
 
-#: source/gx/tilix/terminal/terminal.d:3785
+#: source/gx/tilix/terminal/terminal.d:3790
 msgid "All Text Files"
 msgstr "Ĉiuj Tekstaj Dosieroj"
 
-#: source/gx/tilix/terminal/terminal.d:4115
+#: source/gx/tilix/terminal/terminal.d:4120
 msgid "Unknown"
 msgstr "Nekonata"
 
-#: source/gx/tilix/terminal/terminal.d:4379
+#: source/gx/tilix/terminal/terminal.d:4384
 #, c-format
 msgid "The child process exited normally with status %d"
 msgstr "La ida procezo finiĝis ordinare per stato %d"
 
-#: source/gx/tilix/terminal/terminal.d:4380
+#: source/gx/tilix/terminal/terminal.d:4385
 #, c-format
 msgid "The child process was aborted by signal %d."
 msgstr "La ida procezo estis misfinita de signalo %d."
 
-#: source/gx/tilix/terminal/terminal.d:4381
+#: source/gx/tilix/terminal/terminal.d:4386
 msgid "The child process was aborted."
 msgstr "La ida procezo misfiniĝis."
 
-#: source/gx/tilix/terminal/terminal.d:4387
+#: source/gx/tilix/terminal/terminal.d:4392
 msgid "Relaunch"
 msgstr "Relanĉi"
 
-#: source/gx/tilix/terminal/terminal.d:4424
+#: source/gx/tilix/terminal/terminal.d:4429
 msgid "Ignore"
 msgstr ""
 
-#: source/gx/tilix/terminal/terminal.d:4425
+#: source/gx/tilix/terminal/terminal.d:4430
 #, c-format
 msgid "Terminal wants to copy to clipboard: %s"
 msgstr ""
 
-#: source/gx/tilix/terminal/terminal.d:4477
+#: source/gx/tilix/terminal/terminal.d:4482
 msgid "Don't Paste"
 msgstr "Ne Alglui"
 
-#: source/gx/tilix/terminal/terminal.d:4478
+#: source/gx/tilix/terminal/terminal.d:4483
 msgid "Paste Anyway"
 msgstr "Alglui Malgraŭe"
 

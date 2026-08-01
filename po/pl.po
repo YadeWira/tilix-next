@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Polish (Tilix)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-01 15:04-0500\n"
+"POT-Creation-Date: 2026-08-01 15:32-0500\n"
 "PO-Revision-Date: 2022-10-17 00:57+0000\n"
 "Last-Translator: gnu-ewm <gnu.ewm@protonmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/tilix/"
@@ -1187,7 +1187,7 @@ msgstr "Otwórz…"
 
 #: source/gx/tilix/appwindow.d:690 source/gx/tilix/appwindow.d:1558
 #: source/gx/tilix/prefeditor/profileeditor.d:948
-#: source/gx/tilix/terminal/terminal.d:3779
+#: source/gx/tilix/terminal/terminal.d:3784
 msgid "Save"
 msgstr "Zapisz"
 
@@ -1234,7 +1234,7 @@ msgstr "Wszystkie pliki JSON"
 #: source/gx/tilix/appwindow.d:1465
 #: source/gx/tilix/prefeditor/prefdialog.d:1219
 #: source/gx/tilix/prefeditor/profileeditor.d:965
-#: source/gx/tilix/terminal/terminal.d:3789
+#: source/gx/tilix/terminal/terminal.d:3794
 msgid "All Files"
 msgstr "Wszystkie pliki"
 
@@ -1256,7 +1256,7 @@ msgstr "Wczytywanie sesji"
 #: source/gx/tilix/terminal/advpaste.d:137 source/gx/tilix/terminal/layout.d:33
 #: source/gx/tilix/terminal/password.d:371
 #: source/gx/tilix/terminal/password.d:493
-#: source/gx/tilix/terminal/terminal.d:3779
+#: source/gx/tilix/terminal/terminal.d:3784
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -1357,7 +1357,7 @@ msgstr "Wybór ścieżki"
 #: source/gx/tilix/bookmark/manager.d:687
 #: source/gx/tilix/prefeditor/advdialog.d:106
 #: source/gx/tilix/prefeditor/profileeditor.d:98
-#: source/gx/tilix/prefeditor/profileeditor.d:1145
+#: source/gx/tilix/prefeditor/profileeditor.d:1154
 #: source/gx/tilix/terminal/layout.d:89
 msgid "Command"
 msgstr "Polecenie"
@@ -1711,14 +1711,14 @@ msgstr "Nieważna wielkość liter"
 
 #: source/gx/tilix/prefeditor/advdialog.d:134
 #: source/gx/tilix/prefeditor/advdialog.d:313
-#: source/gx/tilix/prefeditor/profileeditor.d:1312
+#: source/gx/tilix/prefeditor/profileeditor.d:1321
 msgid "Add"
 msgstr "Dodaj"
 
 #: source/gx/tilix/prefeditor/advdialog.d:141
 #: source/gx/tilix/prefeditor/advdialog.d:319
 #: source/gx/tilix/prefeditor/prefdialog.d:556
-#: source/gx/tilix/prefeditor/profileeditor.d:1349
+#: source/gx/tilix/prefeditor/profileeditor.d:1358
 #: source/gx/tilix/terminal/password.d:213
 msgid "Delete"
 msgstr "Usuń"
@@ -1793,7 +1793,7 @@ msgstr ""
 
 #: source/gx/tilix/prefeditor/common.d:46
 #: source/gx/tilix/prefeditor/common.d:77
-#: source/gx/tilix/prefeditor/profileeditor.d:1330
+#: source/gx/tilix/prefeditor/profileeditor.d:1339
 #: source/gx/tilix/terminal/password.d:184
 msgid "Edit"
 msgstr "Zmodyfikuj"
@@ -2242,7 +2242,7 @@ msgstr "Zgodność"
 
 #: source/gx/tilix/prefeditor/profileeditor.d:103
 #: source/gx/tilix/prefeditor/profileeditor.d:693
-#: source/gx/tilix/prefeditor/profileeditor.d:1184
+#: source/gx/tilix/prefeditor/profileeditor.d:1193
 #: source/gx/tilix/terminal/layout.d:68
 msgid "Badge"
 msgstr "Plakietka"
@@ -2314,7 +2314,7 @@ msgid "Unfocused"
 msgstr "W tle"
 
 #: source/gx/tilix/prefeditor/profileeditor.d:380
-#: source/gx/tilix/prefeditor/profileeditor.d:1208
+#: source/gx/tilix/prefeditor/profileeditor.d:1217
 msgid "Custom font"
 msgstr "Zmień ustawienia czcionki"
 
@@ -2587,59 +2587,67 @@ msgstr "Wąskie"
 msgid "Wide"
 msgstr "Szerokie"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1135
+#: source/gx/tilix/prefeditor/profileeditor.d:1119
+msgid "Enable Sixel image support (e.g. fastfetch/neofetch banners)"
+msgstr ""
+
+#: source/gx/tilix/prefeditor/profileeditor.d:1123
+msgid "Not supported by the installed version of VTE"
+msgstr ""
+
+#: source/gx/tilix/prefeditor/profileeditor.d:1144
 msgid "Run command as a login shell"
 msgstr "Uruchamianie w roli powłoki startowej"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1139
+#: source/gx/tilix/prefeditor/profileeditor.d:1148
 msgid "Run a custom command instead of my shell"
 msgstr "Uruchamianie własnego polecenia zamiast powłoki"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1156
+#: source/gx/tilix/prefeditor/profileeditor.d:1165
 msgid "When command exits"
 msgstr "Działanie zakończenia polecenia"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Exit the terminal"
 msgstr "Zakończenie działania terminala"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Hold the terminal open"
 msgstr "Pozostawienia terminala otwartego"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Restart the command"
 msgstr "Ponowne uruchomienie polecenia"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1198
+#: source/gx/tilix/prefeditor/profileeditor.d:1207
 msgid "Badge position"
 msgstr "Położenie plakietki"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Northeast"
 msgstr "Północny wschód"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Northwest"
 msgstr "Północny zachód"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Southeast"
 msgstr "Południowy wschód"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Southwest"
 msgstr "Południowy zachód"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1220
+#: source/gx/tilix/prefeditor/profileeditor.d:1229
 msgid "Choose A Badge Font"
 msgstr "Wybór czcionki terminala"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1258
+#: source/gx/tilix/prefeditor/profileeditor.d:1267
 msgid "Notify New Activity"
 msgstr "Powiadamianie o nowej aktywności"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1265
+#: source/gx/tilix/prefeditor/profileeditor.d:1274
 msgid ""
 "A notification can be raised when new activity occurs after a specified "
 "period of silence."
@@ -2647,11 +2655,11 @@ msgstr ""
 "Powiadomienie można zgłosić, gdy po określonym czasie ciszy nastąpi nowa "
 "aktywność."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1278
+#: source/gx/tilix/prefeditor/profileeditor.d:1287
 msgid "Automatic Profile Switching"
 msgstr "Automatyczne przełączanie profilów"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1287
+#: source/gx/tilix/prefeditor/profileeditor.d:1296
 msgid ""
 "Profiles are automatically selected based on the values entered here.\n"
 "Values are entered using a <i>username@hostname:directory</i> format. Either "
@@ -2666,7 +2674,7 @@ msgstr ""
 "Niedozwolone są dopasowania pomijające nazwę komputera wraz ze ścieżką "
 "katalogu."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1289
+#: source/gx/tilix/prefeditor/profileeditor.d:1298
 msgid ""
 "Profiles are automatically selected based on the values entered here.\n"
 "Values are entered using a <i>hostname:directory</i> format. Either the "
@@ -2680,47 +2688,47 @@ msgstr ""
 "dwukropka. Niedozwolone są dopasowania pomijające nazwę komputera wraz ze "
 "ścieżką katalogu."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1301
+#: source/gx/tilix/prefeditor/profileeditor.d:1310
 msgid "Match"
 msgstr "Dopasowanie"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1316
+#: source/gx/tilix/prefeditor/profileeditor.d:1325
 msgid "Enter username@hostname:directory to match"
 msgstr ""
 "Proszę wprowadzić wzór nazwa_użytkownika@nazwa_komputera:katalog do "
 "dopasowania"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1318
+#: source/gx/tilix/prefeditor/profileeditor.d:1327
 msgid "Enter hostname:directory to match"
 msgstr "Wpisz nazwę hosta:katalog, aby dopasować"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1320
+#: source/gx/tilix/prefeditor/profileeditor.d:1329
 msgid "Add New Match"
 msgstr "Dodawanie dopasowania"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1337
+#: source/gx/tilix/prefeditor/profileeditor.d:1346
 msgid "Edit username@hostname:directory to match"
 msgstr ""
 "Proszę zmodyfikować wzór nazwa_użytkownika@nazwa_komputera:katalog do "
 "dopasowania"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1339
+#: source/gx/tilix/prefeditor/profileeditor.d:1348
 msgid "Edit hostname:directory to match"
 msgstr "Edytuj nazwę hosta:katalog, aby dopasować"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1341
+#: source/gx/tilix/prefeditor/profileeditor.d:1350
 msgid "Edit Match"
 msgstr "Modyfikowanie dopasowania"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1372
+#: source/gx/tilix/prefeditor/profileeditor.d:1381
 msgid "Enable by default"
 msgstr "Włącz domyślne"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1381
+#: source/gx/tilix/prefeditor/profileeditor.d:1390
 msgid "Threshold for continuous silence"
 msgstr "Próg stanu ciągłej bezczynności (sekundy)"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1390
+#: source/gx/tilix/prefeditor/profileeditor.d:1399
 msgid "(seconds)"
 msgstr "s"
 
@@ -2743,48 +2751,48 @@ msgstr "Okno"
 msgid "Help"
 msgstr "Pomoc"
 
-#: source/gx/tilix/preferences.d:260
+#: source/gx/tilix/preferences.d:261
 msgid "UpdateState"
 msgstr "UaktualnijStan"
 
-#: source/gx/tilix/preferences.d:261
+#: source/gx/tilix/preferences.d:262
 msgid "ExecuteCommand"
 msgstr "WykonajPolecenie"
 
-#: source/gx/tilix/preferences.d:262
+#: source/gx/tilix/preferences.d:263
 msgid "SendNotification"
 msgstr "WyślijPowiadomienie"
 
-#: source/gx/tilix/preferences.d:263
+#: source/gx/tilix/preferences.d:264
 msgid "UpdateTitle"
 msgstr "AktualizujTytuł"
 
-#: source/gx/tilix/preferences.d:264
+#: source/gx/tilix/preferences.d:265
 msgid "PlayBell"
 msgstr "OdtwórzDzwonek"
 
-#: source/gx/tilix/preferences.d:265
+#: source/gx/tilix/preferences.d:266
 msgid "SendText"
 msgstr "WyślijTekst"
 
-#: source/gx/tilix/preferences.d:266
+#: source/gx/tilix/preferences.d:267
 msgid "InsertPassword"
 msgstr "WprowadźHasło"
 
-#: source/gx/tilix/preferences.d:267
+#: source/gx/tilix/preferences.d:268
 msgid "UpdateBadge"
 msgstr "ZnakAktualizacji"
 
-#: source/gx/tilix/preferences.d:268
+#: source/gx/tilix/preferences.d:269
 msgid "RunProcess"
 msgstr "UruchomProces"
 
-#: source/gx/tilix/preferences.d:269
+#: source/gx/tilix/preferences.d:270
 #, fuzzy
 msgid "ClipboardPrompt"
 msgstr "Schowek"
 
-#: source/gx/tilix/preferences.d:380
+#: source/gx/tilix/preferences.d:381
 #, c-format
 msgid "%s (Copy)"
 msgstr "%s (kopia)"
@@ -3061,7 +3069,7 @@ msgstr "Skopiuj adres odnośnika"
 
 #: source/gx/tilix/terminal/terminal.d:1911
 #: source/gx/tilix/terminal/terminal.d:1921
-#: source/gx/tilix/terminal/terminal.d:4424
+#: source/gx/tilix/terminal/terminal.d:4429
 msgid "Copy"
 msgstr "Skopiuj"
 
@@ -3102,7 +3110,7 @@ msgid "Remote File URI Unsupported"
 msgstr "Nieobsługiwany adres URL zdalnego pliku"
 
 #: source/gx/tilix/terminal/terminal.d:2154
-#: source/gx/tilix/terminal/terminal.d:2708
+#: source/gx/tilix/terminal/terminal.d:2713
 #, c-format
 msgid "Custom link regex '%s' has an error, ignoring"
 msgstr ""
@@ -3121,76 +3129,76 @@ msgstr "Nie można otworzyć dopasowania „%s”"
 msgid "Error Opening Match"
 msgstr "Błąd otwierania dopasowania"
 
-#: source/gx/tilix/terminal/terminal.d:2668
+#: source/gx/tilix/terminal/terminal.d:2673
 #, c-format
 msgid "Unexpected error occurred when adding link regex: %s"
 msgstr ""
 "Wystąpił nieoczekiwany błąd podczas dodawania wyrażenia regularnego "
 "odnośnika: %s"
 
-#: source/gx/tilix/terminal/terminal.d:2755
+#: source/gx/tilix/terminal/terminal.d:2760
 #, fuzzy, c-format
 msgid "Could not parse current directory URI '%s' due to error '%s'"
 msgstr "Nie można sprawdzić pliku „%s” z powodu błędu „%s”"
 
-#: source/gx/tilix/terminal/terminal.d:2872
+#: source/gx/tilix/terminal/terminal.d:2877
 msgid "Unexpected error occurred, no additional information available"
 msgstr "Wystąpił nieoczekiwany błąd, brak dodatkowych informacji"
 
-#: source/gx/tilix/terminal/terminal.d:2882
+#: source/gx/tilix/terminal/terminal.d:2887
 #, c-format
 msgid "Unexpected error occurred: %s"
 msgstr "Wystąpił nieoczekiwany błąd: %s"
 
-#: source/gx/tilix/terminal/terminal.d:3525
+#: source/gx/tilix/terminal/terminal.d:3530
 #, fuzzy, c-format
 msgid "Could not parse dropped URI '%s' due to error '%s'"
 msgstr "Nie można sprawdzić pliku „%s” z powodu błędu „%s”"
 
-#: source/gx/tilix/terminal/terminal.d:3776
+#: source/gx/tilix/terminal/terminal.d:3781
 msgid "Save Terminal Output"
 msgstr "Zapisywanie zawartości terminala"
 
-#: source/gx/tilix/terminal/terminal.d:3785
+#: source/gx/tilix/terminal/terminal.d:3790
 msgid "All Text Files"
 msgstr "Wszystkie pliki tekstowe"
 
-#: source/gx/tilix/terminal/terminal.d:4115
+#: source/gx/tilix/terminal/terminal.d:4120
 msgid "Unknown"
 msgstr "Nieznany"
 
-#: source/gx/tilix/terminal/terminal.d:4379
+#: source/gx/tilix/terminal/terminal.d:4384
 #, c-format
 msgid "The child process exited normally with status %d"
 msgstr "Zakończono proces podrzędny w zwykły sposób, ze stanem %d"
 
-#: source/gx/tilix/terminal/terminal.d:4380
+#: source/gx/tilix/terminal/terminal.d:4385
 #, c-format
 msgid "The child process was aborted by signal %d."
 msgstr "Przerwano proces podrzędny sygnałem %d."
 
-#: source/gx/tilix/terminal/terminal.d:4381
+#: source/gx/tilix/terminal/terminal.d:4386
 msgid "The child process was aborted."
 msgstr "Przerwano proces podrzędny."
 
-#: source/gx/tilix/terminal/terminal.d:4387
+#: source/gx/tilix/terminal/terminal.d:4392
 msgid "Relaunch"
 msgstr "Uruchom ponownie"
 
-#: source/gx/tilix/terminal/terminal.d:4424
+#: source/gx/tilix/terminal/terminal.d:4429
 msgid "Ignore"
 msgstr ""
 
-#: source/gx/tilix/terminal/terminal.d:4425
+#: source/gx/tilix/terminal/terminal.d:4430
 #, c-format
 msgid "Terminal wants to copy to clipboard: %s"
 msgstr ""
 
-#: source/gx/tilix/terminal/terminal.d:4477
+#: source/gx/tilix/terminal/terminal.d:4482
 msgid "Don't Paste"
 msgstr "Nie wklejaj"
 
-#: source/gx/tilix/terminal/terminal.d:4478
+#: source/gx/tilix/terminal/terminal.d:4483
 msgid "Paste Anyway"
 msgstr "Wklej mimo to"
 

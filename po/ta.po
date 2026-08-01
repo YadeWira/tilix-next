@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tilix\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-01 15:04-0500\n"
+"POT-Creation-Date: 2026-08-01 15:32-0500\n"
 "PO-Revision-Date: 2025-04-20 22:01+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/tilix/translations/"
@@ -1200,7 +1200,7 @@ msgstr "திற…"
 
 #: source/gx/tilix/appwindow.d:690 source/gx/tilix/appwindow.d:1558
 #: source/gx/tilix/prefeditor/profileeditor.d:948
-#: source/gx/tilix/terminal/terminal.d:3779
+#: source/gx/tilix/terminal/terminal.d:3784
 msgid "Save"
 msgstr "சேமி"
 
@@ -1247,7 +1247,7 @@ msgstr "அனைத்து சாதொபொகு கோப்புகள�
 #: source/gx/tilix/appwindow.d:1465
 #: source/gx/tilix/prefeditor/prefdialog.d:1219
 #: source/gx/tilix/prefeditor/profileeditor.d:965
-#: source/gx/tilix/terminal/terminal.d:3789
+#: source/gx/tilix/terminal/terminal.d:3794
 msgid "All Files"
 msgstr "அனைத்து கோப்புகள்"
 
@@ -1269,7 +1269,7 @@ msgstr "சுமை அமர்வு"
 #: source/gx/tilix/terminal/advpaste.d:137 source/gx/tilix/terminal/layout.d:33
 #: source/gx/tilix/terminal/password.d:371
 #: source/gx/tilix/terminal/password.d:493
-#: source/gx/tilix/terminal/terminal.d:3779
+#: source/gx/tilix/terminal/terminal.d:3784
 msgid "Cancel"
 msgstr "ரத்துசெய்"
 
@@ -1369,7 +1369,7 @@ msgstr "பாதையைத் தேர்ந்தெடுக்கவு�
 #: source/gx/tilix/bookmark/manager.d:687
 #: source/gx/tilix/prefeditor/advdialog.d:106
 #: source/gx/tilix/prefeditor/profileeditor.d:98
-#: source/gx/tilix/prefeditor/profileeditor.d:1145
+#: source/gx/tilix/prefeditor/profileeditor.d:1154
 #: source/gx/tilix/terminal/layout.d:89
 msgid "Command"
 msgstr "கட்டளை"
@@ -1724,14 +1724,14 @@ msgstr "வழக்கு உணர்வற்றது"
 
 #: source/gx/tilix/prefeditor/advdialog.d:134
 #: source/gx/tilix/prefeditor/advdialog.d:313
-#: source/gx/tilix/prefeditor/profileeditor.d:1312
+#: source/gx/tilix/prefeditor/profileeditor.d:1321
 msgid "Add"
 msgstr "கூட்டு"
 
 #: source/gx/tilix/prefeditor/advdialog.d:141
 #: source/gx/tilix/prefeditor/advdialog.d:319
 #: source/gx/tilix/prefeditor/prefdialog.d:556
-#: source/gx/tilix/prefeditor/profileeditor.d:1349
+#: source/gx/tilix/prefeditor/profileeditor.d:1358
 #: source/gx/tilix/terminal/password.d:213
 msgid "Delete"
 msgstr "நீக்கு"
@@ -1806,7 +1806,7 @@ msgstr ""
 
 #: source/gx/tilix/prefeditor/common.d:46
 #: source/gx/tilix/prefeditor/common.d:77
-#: source/gx/tilix/prefeditor/profileeditor.d:1330
+#: source/gx/tilix/prefeditor/profileeditor.d:1339
 #: source/gx/tilix/terminal/password.d:184
 msgid "Edit"
 msgstr "தொகு"
@@ -2253,7 +2253,7 @@ msgstr "பொருந்தக்கூடிய தன்மை"
 
 #: source/gx/tilix/prefeditor/profileeditor.d:103
 #: source/gx/tilix/prefeditor/profileeditor.d:693
-#: source/gx/tilix/prefeditor/profileeditor.d:1184
+#: source/gx/tilix/prefeditor/profileeditor.d:1193
 #: source/gx/tilix/terminal/layout.d:68
 msgid "Badge"
 msgstr "ஒட்டு"
@@ -2325,7 +2325,7 @@ msgid "Unfocused"
 msgstr "கவனம் செலுத்தப்படாதது"
 
 #: source/gx/tilix/prefeditor/profileeditor.d:380
-#: source/gx/tilix/prefeditor/profileeditor.d:1208
+#: source/gx/tilix/prefeditor/profileeditor.d:1217
 msgid "Custom font"
 msgstr "தனிப்பயன் எழுத்துரு"
 
@@ -2598,59 +2598,67 @@ msgstr "குறுகிய"
 msgid "Wide"
 msgstr "அகலமான"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1135
+#: source/gx/tilix/prefeditor/profileeditor.d:1119
+msgid "Enable Sixel image support (e.g. fastfetch/neofetch banners)"
+msgstr ""
+
+#: source/gx/tilix/prefeditor/profileeditor.d:1123
+msgid "Not supported by the installed version of VTE"
+msgstr ""
+
+#: source/gx/tilix/prefeditor/profileeditor.d:1144
 msgid "Run command as a login shell"
 msgstr "உள்நுழைவு செல்லாக கட்டளையை இயக்கவும்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1139
+#: source/gx/tilix/prefeditor/profileeditor.d:1148
 msgid "Run a custom command instead of my shell"
 msgstr "எனது செல்லுக்கு பதிலாக தனிப்பயன் கட்டளையை இயக்கவும்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1156
+#: source/gx/tilix/prefeditor/profileeditor.d:1165
 msgid "When command exits"
 msgstr "கட்டளை வெளியேறும்போது"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Exit the terminal"
 msgstr "முனையத்திலிருந்து வெளியேறவும்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Hold the terminal open"
 msgstr "முனையத்தைத் திறந்து வைத்திருங்கள்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Restart the command"
 msgstr "கட்டளையை மறுதொடக்கம் செய்யுங்கள்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1198
+#: source/gx/tilix/prefeditor/profileeditor.d:1207
 msgid "Badge position"
 msgstr "ஒட்டு நிலை"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Northeast"
 msgstr "வடகிழக்கு"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Northwest"
 msgstr "வடமேற்கு"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Southeast"
 msgstr "தென்கிழக்கு"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Southwest"
 msgstr "தென்மேற்கு"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1220
+#: source/gx/tilix/prefeditor/profileeditor.d:1229
 msgid "Choose A Badge Font"
 msgstr "ஒட்டு எழுத்துருவைத் தேர்வுசெய்க"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1258
+#: source/gx/tilix/prefeditor/profileeditor.d:1267
 msgid "Notify New Activity"
 msgstr "புதிய செயல்பாட்டிற்கு அறிவிக்கவும்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1265
+#: source/gx/tilix/prefeditor/profileeditor.d:1274
 msgid ""
 "A notification can be raised when new activity occurs after a specified "
 "period of silence."
@@ -2658,11 +2666,11 @@ msgstr ""
 "ஒரு குறிப்பிட்ட கால ம .னத்திற்குப் பிறகு புதிய செயல்பாடு நிகழும்போது ஒரு அறிவிப்பை "
 "எழுப்ப முடியும்."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1278
+#: source/gx/tilix/prefeditor/profileeditor.d:1287
 msgid "Automatic Profile Switching"
 msgstr "தானியங்கி சுயவிவர மாறுதல்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1287
+#: source/gx/tilix/prefeditor/profileeditor.d:1296
 msgid ""
 "Profiles are automatically selected based on the values entered here.\n"
 "Values are entered using a <i>username@hostname:directory</i> format. Either "
@@ -2674,7 +2682,7 @@ msgstr ""
 "உள்ளிடப்படுகின்றன. ஓச்ட்பெயர் அல்லது கோப்பகத்தை தவிர்க்கலாம், ஆனால் பெருங்குடல் இருக்க "
 "வேண்டும். ஓச்ட்பெயர் அல்லது கோப்பகத்துடன் உள்ளீடுகள் அனுமதிக்கப்படவில்லை."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1289
+#: source/gx/tilix/prefeditor/profileeditor.d:1298
 msgid ""
 "Profiles are automatically selected based on the values entered here.\n"
 "Values are entered using a <i>hostname:directory</i> format. Either the "
@@ -2686,43 +2694,43 @@ msgstr ""
 "ஓச்ட்பெயர் அல்லது கோப்பகத்தை தவிர்க்கலாம், ஆனால் பெருங்குடல் இருக்க வேண்டும். ஓச்ட்பெயர் அல்லது "
 "கோப்பகத்துடன் உள்ளீடுகள் அனுமதிக்கப்படவில்லை."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1301
+#: source/gx/tilix/prefeditor/profileeditor.d:1310
 msgid "Match"
 msgstr "போட்டி"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1316
+#: source/gx/tilix/prefeditor/profileeditor.d:1325
 msgid "Enter username@hostname:directory to match"
 msgstr "பயனர்பெயரை உள்ளிடவும்@ஓச்ட்பெயர்: பொருந்தக்கூடிய அடைவு"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1318
+#: source/gx/tilix/prefeditor/profileeditor.d:1327
 msgid "Enter hostname:directory to match"
 msgstr "ஓச்ட்பெயரை உள்ளிடவும்: பொருந்தக்கூடிய கோப்பகம்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1320
+#: source/gx/tilix/prefeditor/profileeditor.d:1329
 msgid "Add New Match"
 msgstr "புதிய போட்டியைச் சேர்க்கவும்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1337
+#: source/gx/tilix/prefeditor/profileeditor.d:1346
 msgid "Edit username@hostname:directory to match"
 msgstr "பயனர்பெயரைத் திருத்தவும்@ஓச்ட்பெயர்: பொருந்தக்கூடிய அடைவு"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1339
+#: source/gx/tilix/prefeditor/profileeditor.d:1348
 msgid "Edit hostname:directory to match"
 msgstr "ஓச்ட்பெயரைத் திருத்து: பொருந்தக்கூடிய அடைவு"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1341
+#: source/gx/tilix/prefeditor/profileeditor.d:1350
 msgid "Edit Match"
 msgstr "போட்டியைத் திருத்து"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1372
+#: source/gx/tilix/prefeditor/profileeditor.d:1381
 msgid "Enable by default"
 msgstr "இயல்புநிலையாக இயக்கவும்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1381
+#: source/gx/tilix/prefeditor/profileeditor.d:1390
 msgid "Threshold for continuous silence"
 msgstr "தொடர்ச்சியான ம .னத்திற்கான வாசல்"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1390
+#: source/gx/tilix/prefeditor/profileeditor.d:1399
 msgid "(seconds)"
 msgstr "(விநாடிகள்)"
 
@@ -2745,48 +2753,48 @@ msgstr "சாளரம்"
 msgid "Help"
 msgstr "உதவி"
 
-#: source/gx/tilix/preferences.d:260
+#: source/gx/tilix/preferences.d:261
 msgid "UpdateState"
 msgstr "புதுப்பிப்பு"
 
-#: source/gx/tilix/preferences.d:261
+#: source/gx/tilix/preferences.d:262
 msgid "ExecuteCommand"
 msgstr "நிர்வாகம்"
 
-#: source/gx/tilix/preferences.d:262
+#: source/gx/tilix/preferences.d:263
 msgid "SendNotification"
 msgstr "அறிவிப்புஅனுப்பு"
 
-#: source/gx/tilix/preferences.d:263
+#: source/gx/tilix/preferences.d:264
 msgid "UpdateTitle"
 msgstr "புதுப்பிப்பு"
 
-#: source/gx/tilix/preferences.d:264
+#: source/gx/tilix/preferences.d:265
 msgid "PlayBell"
 msgstr "பிளேபல்"
 
-#: source/gx/tilix/preferences.d:265
+#: source/gx/tilix/preferences.d:266
 msgid "SendText"
 msgstr "உரைஅனுப்பு"
 
-#: source/gx/tilix/preferences.d:266
+#: source/gx/tilix/preferences.d:267
 msgid "InsertPassword"
 msgstr "இன்செர்ட்பாச் வேர்ட்"
 
-#: source/gx/tilix/preferences.d:267
+#: source/gx/tilix/preferences.d:268
 msgid "UpdateBadge"
 msgstr "புதுப்பிப்பு ஒட்டு"
 
-#: source/gx/tilix/preferences.d:268
+#: source/gx/tilix/preferences.d:269
 msgid "RunProcess"
 msgstr "ரன் ப்ரோசச்"
 
-#: source/gx/tilix/preferences.d:269
+#: source/gx/tilix/preferences.d:270
 #, fuzzy
 msgid "ClipboardPrompt"
 msgstr "இடைநிலைப் பலகை"
 
-#: source/gx/tilix/preferences.d:380
+#: source/gx/tilix/preferences.d:381
 #, c-format
 msgid "%s (Copy)"
 msgstr "%s (நகல்)"
@@ -3059,7 +3067,7 @@ msgstr "இணைப்பு முகவரியை நகலெடுக்�
 
 #: source/gx/tilix/terminal/terminal.d:1911
 #: source/gx/tilix/terminal/terminal.d:1921
-#: source/gx/tilix/terminal/terminal.d:4424
+#: source/gx/tilix/terminal/terminal.d:4429
 msgid "Copy"
 msgstr "நகலெடு"
 
@@ -3100,7 +3108,7 @@ msgid "Remote File URI Unsupported"
 msgstr "தொலை கோப்பு யூரி ஆதரிக்கப்படவில்லை"
 
 #: source/gx/tilix/terminal/terminal.d:2154
-#: source/gx/tilix/terminal/terminal.d:2708
+#: source/gx/tilix/terminal/terminal.d:2713
 #, c-format
 msgid "Custom link regex '%s' has an error, ignoring"
 msgstr "தனிப்பயன் இணைப்பு ரீசெக்ச் '%s' ஒரு பிழையைக் கொண்டுள்ளது, புறக்கணிக்கிறது"
@@ -3118,73 +3126,73 @@ msgstr "'%s' போட்டியைத் திறக்க முடிய�
 msgid "Error Opening Match"
 msgstr "பிழை திறக்கும் போட்டி"
 
-#: source/gx/tilix/terminal/terminal.d:2668
+#: source/gx/tilix/terminal/terminal.d:2673
 #, c-format
 msgid "Unexpected error occurred when adding link regex: %s"
 msgstr "இணைப்பு ரீசெக்ச் சேர்க்கும்போது எதிர்பாராத பிழை ஏற்பட்டது: %s"
 
-#: source/gx/tilix/terminal/terminal.d:2755
+#: source/gx/tilix/terminal/terminal.d:2760
 #, fuzzy, c-format
 msgid "Could not parse current directory URI '%s' due to error '%s'"
 msgstr "பிழை '%s' காரணமாக '%s' கோப்பை சரிபார்க்க முடியவில்லை"
 
-#: source/gx/tilix/terminal/terminal.d:2872
+#: source/gx/tilix/terminal/terminal.d:2877
 msgid "Unexpected error occurred, no additional information available"
 msgstr "எதிர்பாராத பிழை ஏற்பட்டது, கூடுதல் தகவல்கள் எதுவும் கிடைக்கவில்லை"
 
-#: source/gx/tilix/terminal/terminal.d:2882
+#: source/gx/tilix/terminal/terminal.d:2887
 #, c-format
 msgid "Unexpected error occurred: %s"
 msgstr "எதிர்பாராத பிழை ஏற்பட்டது: %s"
 
-#: source/gx/tilix/terminal/terminal.d:3525
+#: source/gx/tilix/terminal/terminal.d:3530
 #, fuzzy, c-format
 msgid "Could not parse dropped URI '%s' due to error '%s'"
 msgstr "பிழை '%s' காரணமாக '%s' கோப்பை சரிபார்க்க முடியவில்லை"
 
-#: source/gx/tilix/terminal/terminal.d:3776
+#: source/gx/tilix/terminal/terminal.d:3781
 msgid "Save Terminal Output"
 msgstr "முனைய வெளியீட்டைச் சேமிக்கவும்"
 
-#: source/gx/tilix/terminal/terminal.d:3785
+#: source/gx/tilix/terminal/terminal.d:3790
 msgid "All Text Files"
 msgstr "அனைத்து உரை கோப்புகளும்"
 
-#: source/gx/tilix/terminal/terminal.d:4115
+#: source/gx/tilix/terminal/terminal.d:4120
 msgid "Unknown"
 msgstr "தெரியவில்லை"
 
-#: source/gx/tilix/terminal/terminal.d:4379
+#: source/gx/tilix/terminal/terminal.d:4384
 #, c-format
 msgid "The child process exited normally with status %d"
 msgstr "குழந்தை செயல்முறை பொதுவாக நிலை %d உடன் வெளியேறியது"
 
-#: source/gx/tilix/terminal/terminal.d:4380
+#: source/gx/tilix/terminal/terminal.d:4385
 #, c-format
 msgid "The child process was aborted by signal %d."
 msgstr "குழந்தை செயல்முறை சமிக்ஞை %d ஆல் கைவிடப்பட்டது."
 
-#: source/gx/tilix/terminal/terminal.d:4381
+#: source/gx/tilix/terminal/terminal.d:4386
 msgid "The child process was aborted."
 msgstr "குழந்தை செயல்முறை கைவிடப்பட்டது."
 
-#: source/gx/tilix/terminal/terminal.d:4387
+#: source/gx/tilix/terminal/terminal.d:4392
 msgid "Relaunch"
 msgstr "மீண்டும் தொடங்கவும்"
 
-#: source/gx/tilix/terminal/terminal.d:4424
+#: source/gx/tilix/terminal/terminal.d:4429
 msgid "Ignore"
 msgstr ""
 
-#: source/gx/tilix/terminal/terminal.d:4425
+#: source/gx/tilix/terminal/terminal.d:4430
 #, c-format
 msgid "Terminal wants to copy to clipboard: %s"
 msgstr ""
 
-#: source/gx/tilix/terminal/terminal.d:4477
+#: source/gx/tilix/terminal/terminal.d:4482
 msgid "Don't Paste"
 msgstr "ஒட்ட வேண்டாம்"
 
-#: source/gx/tilix/terminal/terminal.d:4478
+#: source/gx/tilix/terminal/terminal.d:4483
 msgid "Paste Anyway"
 msgstr "எப்படியும் ஒட்டவும்"

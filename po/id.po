@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: terminix\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-01 15:04-0500\n"
+"POT-Creation-Date: 2026-08-01 15:32-0500\n"
 "PO-Revision-Date: 2026-03-24 11:35+0000\n"
 "Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/tilix/"
@@ -1208,7 +1208,7 @@ msgstr "Buka…"
 
 #: source/gx/tilix/appwindow.d:690 source/gx/tilix/appwindow.d:1558
 #: source/gx/tilix/prefeditor/profileeditor.d:948
-#: source/gx/tilix/terminal/terminal.d:3779
+#: source/gx/tilix/terminal/terminal.d:3784
 msgid "Save"
 msgstr "Simpan"
 
@@ -1255,7 +1255,7 @@ msgstr "Semua Berkas JSON"
 #: source/gx/tilix/appwindow.d:1465
 #: source/gx/tilix/prefeditor/prefdialog.d:1219
 #: source/gx/tilix/prefeditor/profileeditor.d:965
-#: source/gx/tilix/terminal/terminal.d:3789
+#: source/gx/tilix/terminal/terminal.d:3794
 msgid "All Files"
 msgstr "Semua Berkas"
 
@@ -1277,7 +1277,7 @@ msgstr "Muat Sesi"
 #: source/gx/tilix/terminal/advpaste.d:137 source/gx/tilix/terminal/layout.d:33
 #: source/gx/tilix/terminal/password.d:371
 #: source/gx/tilix/terminal/password.d:493
-#: source/gx/tilix/terminal/terminal.d:3779
+#: source/gx/tilix/terminal/terminal.d:3784
 msgid "Cancel"
 msgstr "Batal"
 
@@ -1377,7 +1377,7 @@ msgstr "Pilih Path"
 #: source/gx/tilix/bookmark/manager.d:687
 #: source/gx/tilix/prefeditor/advdialog.d:106
 #: source/gx/tilix/prefeditor/profileeditor.d:98
-#: source/gx/tilix/prefeditor/profileeditor.d:1145
+#: source/gx/tilix/prefeditor/profileeditor.d:1154
 #: source/gx/tilix/terminal/layout.d:89
 msgid "Command"
 msgstr "Perintah"
@@ -1732,14 +1732,14 @@ msgstr "Besar Kecil Tidak Masalah"
 
 #: source/gx/tilix/prefeditor/advdialog.d:134
 #: source/gx/tilix/prefeditor/advdialog.d:313
-#: source/gx/tilix/prefeditor/profileeditor.d:1312
+#: source/gx/tilix/prefeditor/profileeditor.d:1321
 msgid "Add"
 msgstr "Tambah"
 
 #: source/gx/tilix/prefeditor/advdialog.d:141
 #: source/gx/tilix/prefeditor/advdialog.d:319
 #: source/gx/tilix/prefeditor/prefdialog.d:556
-#: source/gx/tilix/prefeditor/profileeditor.d:1349
+#: source/gx/tilix/prefeditor/profileeditor.d:1358
 #: source/gx/tilix/terminal/password.d:213
 msgid "Delete"
 msgstr "Hapus"
@@ -1814,7 +1814,7 @@ msgstr ""
 
 #: source/gx/tilix/prefeditor/common.d:46
 #: source/gx/tilix/prefeditor/common.d:77
-#: source/gx/tilix/prefeditor/profileeditor.d:1330
+#: source/gx/tilix/prefeditor/profileeditor.d:1339
 #: source/gx/tilix/terminal/password.d:184
 msgid "Edit"
 msgstr "Sunting"
@@ -2262,7 +2262,7 @@ msgstr "Kompatibilitas"
 
 #: source/gx/tilix/prefeditor/profileeditor.d:103
 #: source/gx/tilix/prefeditor/profileeditor.d:693
-#: source/gx/tilix/prefeditor/profileeditor.d:1184
+#: source/gx/tilix/prefeditor/profileeditor.d:1193
 #: source/gx/tilix/terminal/layout.d:68
 msgid "Badge"
 msgstr "Lencana"
@@ -2334,7 +2334,7 @@ msgid "Unfocused"
 msgstr "Tak terfokus"
 
 #: source/gx/tilix/prefeditor/profileeditor.d:380
-#: source/gx/tilix/prefeditor/profileeditor.d:1208
+#: source/gx/tilix/prefeditor/profileeditor.d:1217
 msgid "Custom font"
 msgstr "Font kustom"
 
@@ -2608,59 +2608,67 @@ msgstr "Sempit"
 msgid "Wide"
 msgstr "Lebar"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1135
+#: source/gx/tilix/prefeditor/profileeditor.d:1119
+msgid "Enable Sixel image support (e.g. fastfetch/neofetch banners)"
+msgstr ""
+
+#: source/gx/tilix/prefeditor/profileeditor.d:1123
+msgid "Not supported by the installed version of VTE"
+msgstr ""
+
+#: source/gx/tilix/prefeditor/profileeditor.d:1144
 msgid "Run command as a login shell"
 msgstr "Jalankan perintah sebagai suatu shell login"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1139
+#: source/gx/tilix/prefeditor/profileeditor.d:1148
 msgid "Run a custom command instead of my shell"
 msgstr "Jalankan perintah ubahan dan bukan shell saya"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1156
+#: source/gx/tilix/prefeditor/profileeditor.d:1165
 msgid "When command exits"
 msgstr "Ketika perintah keluar"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Exit the terminal"
 msgstr "Keluar dari terminal"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Hold the terminal open"
 msgstr "Pertahankan terminal tetap terbuka"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Restart the command"
 msgstr "Menjalankan ulang perintah"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1198
+#: source/gx/tilix/prefeditor/profileeditor.d:1207
 msgid "Badge position"
 msgstr "Posisi lencana"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Northeast"
 msgstr "Timur Laut"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Northwest"
 msgstr "Barat Laut"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Southeast"
 msgstr "Tenggara"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Southwest"
 msgstr "Barat Daya"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1220
+#: source/gx/tilix/prefeditor/profileeditor.d:1229
 msgid "Choose A Badge Font"
 msgstr "Pilih font lencana"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1258
+#: source/gx/tilix/prefeditor/profileeditor.d:1267
 msgid "Notify New Activity"
 msgstr "Beri Tahu Aktivitas Baru"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1265
+#: source/gx/tilix/prefeditor/profileeditor.d:1274
 msgid ""
 "A notification can be raised when new activity occurs after a specified "
 "period of silence."
@@ -2668,11 +2676,11 @@ msgstr ""
 "Notifikasi dapat dimunculkan ketika ada aktivitas baru setelah periode "
 "keheningan tertentu."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1278
+#: source/gx/tilix/prefeditor/profileeditor.d:1287
 msgid "Automatic Profile Switching"
 msgstr "Beralih Profil Otomatis"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1287
+#: source/gx/tilix/prefeditor/profileeditor.d:1296
 msgid ""
 "Profiles are automatically selected based on the values entered here.\n"
 "Values are entered using a <i>username@hostname:directory</i> format. Either "
@@ -2685,7 +2693,7 @@ msgstr ""
 "Nama host atau direktori bisa dihilangkan tapi titik dua harus ada. Entri "
 "tanpa nama host dan tanpa direktori tidak diizinkan."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1289
+#: source/gx/tilix/prefeditor/profileeditor.d:1298
 msgid ""
 "Profiles are automatically selected based on the values entered here.\n"
 "Values are entered using a <i>hostname:directory</i> format. Either the "
@@ -2698,43 +2706,43 @@ msgstr ""
 "Baik nama host atau direktori dapat diabaikan tapi titik dua harus hadir. "
 "Entri tanpa nama host dan tanpa direktori tidak diizinkan."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1301
+#: source/gx/tilix/prefeditor/profileeditor.d:1310
 msgid "Match"
 msgstr "Cocok"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1316
+#: source/gx/tilix/prefeditor/profileeditor.d:1325
 msgid "Enter username@hostname:directory to match"
 msgstr "Masukkan namapengguna@namahost:direktori untuk dicocokkan"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1318
+#: source/gx/tilix/prefeditor/profileeditor.d:1327
 msgid "Enter hostname:directory to match"
 msgstr "Masukkan namahost:direktori untuk dicocokkan"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1320
+#: source/gx/tilix/prefeditor/profileeditor.d:1329
 msgid "Add New Match"
 msgstr "Tambahkan Pencocokan Baru"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1337
+#: source/gx/tilix/prefeditor/profileeditor.d:1346
 msgid "Edit username@hostname:directory to match"
 msgstr "Sunting namapengguna@namahost:direktori untuk dicocokkan"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1339
+#: source/gx/tilix/prefeditor/profileeditor.d:1348
 msgid "Edit hostname:directory to match"
 msgstr "Sunting namahost:direktori untuk dicocokkan"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1341
+#: source/gx/tilix/prefeditor/profileeditor.d:1350
 msgid "Edit Match"
 msgstr "Sunting Pencocokan"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1372
+#: source/gx/tilix/prefeditor/profileeditor.d:1381
 msgid "Enable by default"
 msgstr "Aktifkan secara default"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1381
+#: source/gx/tilix/prefeditor/profileeditor.d:1390
 msgid "Threshold for continuous silence"
 msgstr "Ambang batas untuk diam terus menerus"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1390
+#: source/gx/tilix/prefeditor/profileeditor.d:1399
 msgid "(seconds)"
 msgstr "(detik)"
 
@@ -2757,48 +2765,48 @@ msgstr "Jendela"
 msgid "Help"
 msgstr "Bantuan"
 
-#: source/gx/tilix/preferences.d:260
+#: source/gx/tilix/preferences.d:261
 msgid "UpdateState"
 msgstr "PembaruanKondisi"
 
-#: source/gx/tilix/preferences.d:261
+#: source/gx/tilix/preferences.d:262
 msgid "ExecuteCommand"
 msgstr "PerintahEksekusi"
 
-#: source/gx/tilix/preferences.d:262
+#: source/gx/tilix/preferences.d:263
 msgid "SendNotification"
 msgstr "KirimNotifikasi"
 
-#: source/gx/tilix/preferences.d:263
+#: source/gx/tilix/preferences.d:264
 msgid "UpdateTitle"
 msgstr "PerbaruiJudul"
 
-#: source/gx/tilix/preferences.d:264
+#: source/gx/tilix/preferences.d:265
 msgid "PlayBell"
 msgstr "PutarSuara"
 
-#: source/gx/tilix/preferences.d:265
+#: source/gx/tilix/preferences.d:266
 msgid "SendText"
 msgstr "KirimTeks"
 
-#: source/gx/tilix/preferences.d:266
+#: source/gx/tilix/preferences.d:267
 msgid "InsertPassword"
 msgstr "MasukkanSandi"
 
-#: source/gx/tilix/preferences.d:267
+#: source/gx/tilix/preferences.d:268
 msgid "UpdateBadge"
 msgstr "PerbaruiLencana"
 
-#: source/gx/tilix/preferences.d:268
+#: source/gx/tilix/preferences.d:269
 msgid "RunProcess"
 msgstr "JalankanProses"
 
-#: source/gx/tilix/preferences.d:269
+#: source/gx/tilix/preferences.d:270
 #, fuzzy
 msgid "ClipboardPrompt"
 msgstr "Papan Klip"
 
-#: source/gx/tilix/preferences.d:380
+#: source/gx/tilix/preferences.d:381
 #, c-format
 msgid "%s (Copy)"
 msgstr "%s (Salinan)"
@@ -3073,7 +3081,7 @@ msgstr "Salin Alamat Tautan"
 
 #: source/gx/tilix/terminal/terminal.d:1911
 #: source/gx/tilix/terminal/terminal.d:1921
-#: source/gx/tilix/terminal/terminal.d:4424
+#: source/gx/tilix/terminal/terminal.d:4429
 msgid "Copy"
 msgstr "Salin"
 
@@ -3114,7 +3122,7 @@ msgid "Remote File URI Unsupported"
 msgstr "URI Berkas Jarak Jauh Tidak Didukung"
 
 #: source/gx/tilix/terminal/terminal.d:2154
-#: source/gx/tilix/terminal/terminal.d:2708
+#: source/gx/tilix/terminal/terminal.d:2713
 #, c-format
 msgid "Custom link regex '%s' has an error, ignoring"
 msgstr "Regex tautan ubahan '%s' memiliki kesalahan, mengabaikan"
@@ -3132,74 +3140,74 @@ msgstr "Tidak dapat membuka yang cocok '%s'"
 msgid "Error Opening Match"
 msgstr "Galat Membuka Yang Cocok"
 
-#: source/gx/tilix/terminal/terminal.d:2668
+#: source/gx/tilix/terminal/terminal.d:2673
 #, c-format
 msgid "Unexpected error occurred when adding link regex: %s"
 msgstr "Terjadi galat saat menambahkan regex tautan: %s"
 
-#: source/gx/tilix/terminal/terminal.d:2755
+#: source/gx/tilix/terminal/terminal.d:2760
 #, fuzzy, c-format
 msgid "Could not parse current directory URI '%s' due to error '%s'"
 msgstr "Tak bisa memeriksa berkas '%s' karena galat '%s'"
 
-#: source/gx/tilix/terminal/terminal.d:2872
+#: source/gx/tilix/terminal/terminal.d:2877
 msgid "Unexpected error occurred, no additional information available"
 msgstr "Terjadi galat tak terduga, tidak ada informasi tambahan yang tersedia"
 
-#: source/gx/tilix/terminal/terminal.d:2882
+#: source/gx/tilix/terminal/terminal.d:2887
 #, c-format
 msgid "Unexpected error occurred: %s"
 msgstr "Terjadi galat tak terduga: %s"
 
-#: source/gx/tilix/terminal/terminal.d:3525
+#: source/gx/tilix/terminal/terminal.d:3530
 #, fuzzy, c-format
 msgid "Could not parse dropped URI '%s' due to error '%s'"
 msgstr "Tak bisa memeriksa berkas '%s' karena galat '%s'"
 
-#: source/gx/tilix/terminal/terminal.d:3776
+#: source/gx/tilix/terminal/terminal.d:3781
 msgid "Save Terminal Output"
 msgstr "Simpan Keluaran Terminal"
 
-#: source/gx/tilix/terminal/terminal.d:3785
+#: source/gx/tilix/terminal/terminal.d:3790
 msgid "All Text Files"
 msgstr "Semua Berkas Teks"
 
-#: source/gx/tilix/terminal/terminal.d:4115
+#: source/gx/tilix/terminal/terminal.d:4120
 msgid "Unknown"
 msgstr "Tak Dikenal"
 
-#: source/gx/tilix/terminal/terminal.d:4379
+#: source/gx/tilix/terminal/terminal.d:4384
 #, c-format
 msgid "The child process exited normally with status %d"
 msgstr "Proses anak keluar secara normal dengan status %d"
 
-#: source/gx/tilix/terminal/terminal.d:4380
+#: source/gx/tilix/terminal/terminal.d:4385
 #, c-format
 msgid "The child process was aborted by signal %d."
 msgstr "Proses anak digugurkan oleh sinyal %d."
 
-#: source/gx/tilix/terminal/terminal.d:4381
+#: source/gx/tilix/terminal/terminal.d:4386
 msgid "The child process was aborted."
 msgstr "Proses anak digugurkan."
 
-#: source/gx/tilix/terminal/terminal.d:4387
+#: source/gx/tilix/terminal/terminal.d:4392
 msgid "Relaunch"
 msgstr "Luncurkan ulang"
 
-#: source/gx/tilix/terminal/terminal.d:4424
+#: source/gx/tilix/terminal/terminal.d:4429
 msgid "Ignore"
 msgstr ""
 
-#: source/gx/tilix/terminal/terminal.d:4425
+#: source/gx/tilix/terminal/terminal.d:4430
 #, c-format
 msgid "Terminal wants to copy to clipboard: %s"
 msgstr ""
 
-#: source/gx/tilix/terminal/terminal.d:4477
+#: source/gx/tilix/terminal/terminal.d:4482
 msgid "Don't Paste"
 msgstr "Jangan Tempel"
 
-#: source/gx/tilix/terminal/terminal.d:4478
+#: source/gx/tilix/terminal/terminal.d:4483
 msgid "Paste Anyway"
 msgstr "Tempel Saja"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tilix\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-01 15:04-0500\n"
+"POT-Creation-Date: 2026-08-01 15:32-0500\n"
 "PO-Revision-Date: 2020-04-03 03:09+0000\n"
 "Last-Translator: Andrei Pavel <andreicristianpavel@gmail.com>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/tilix/"
@@ -1193,7 +1193,7 @@ msgstr "Deschide…"
 
 #: source/gx/tilix/appwindow.d:690 source/gx/tilix/appwindow.d:1558
 #: source/gx/tilix/prefeditor/profileeditor.d:948
-#: source/gx/tilix/terminal/terminal.d:3779
+#: source/gx/tilix/terminal/terminal.d:3784
 msgid "Save"
 msgstr "Salvează"
 
@@ -1240,7 +1240,7 @@ msgstr "Toate Fișierele JSON"
 #: source/gx/tilix/appwindow.d:1465
 #: source/gx/tilix/prefeditor/prefdialog.d:1219
 #: source/gx/tilix/prefeditor/profileeditor.d:965
-#: source/gx/tilix/terminal/terminal.d:3789
+#: source/gx/tilix/terminal/terminal.d:3794
 msgid "All Files"
 msgstr "Toate Fișierele"
 
@@ -1262,7 +1262,7 @@ msgstr "Încarcă Sesiunea"
 #: source/gx/tilix/terminal/advpaste.d:137 source/gx/tilix/terminal/layout.d:33
 #: source/gx/tilix/terminal/password.d:371
 #: source/gx/tilix/terminal/password.d:493
-#: source/gx/tilix/terminal/terminal.d:3779
+#: source/gx/tilix/terminal/terminal.d:3784
 msgid "Cancel"
 msgstr "Renunță"
 
@@ -1365,7 +1365,7 @@ msgstr "Alege Calea"
 #: source/gx/tilix/bookmark/manager.d:687
 #: source/gx/tilix/prefeditor/advdialog.d:106
 #: source/gx/tilix/prefeditor/profileeditor.d:98
-#: source/gx/tilix/prefeditor/profileeditor.d:1145
+#: source/gx/tilix/prefeditor/profileeditor.d:1154
 #: source/gx/tilix/terminal/layout.d:89
 msgid "Command"
 msgstr "Comandă"
@@ -1721,14 +1721,14 @@ msgstr "Insensibil la majuscule"
 
 #: source/gx/tilix/prefeditor/advdialog.d:134
 #: source/gx/tilix/prefeditor/advdialog.d:313
-#: source/gx/tilix/prefeditor/profileeditor.d:1312
+#: source/gx/tilix/prefeditor/profileeditor.d:1321
 msgid "Add"
 msgstr "Adaugă"
 
 #: source/gx/tilix/prefeditor/advdialog.d:141
 #: source/gx/tilix/prefeditor/advdialog.d:319
 #: source/gx/tilix/prefeditor/prefdialog.d:556
-#: source/gx/tilix/prefeditor/profileeditor.d:1349
+#: source/gx/tilix/prefeditor/profileeditor.d:1358
 #: source/gx/tilix/terminal/password.d:213
 msgid "Delete"
 msgstr "Șterge"
@@ -1803,7 +1803,7 @@ msgstr ""
 
 #: source/gx/tilix/prefeditor/common.d:46
 #: source/gx/tilix/prefeditor/common.d:77
-#: source/gx/tilix/prefeditor/profileeditor.d:1330
+#: source/gx/tilix/prefeditor/profileeditor.d:1339
 #: source/gx/tilix/terminal/password.d:184
 msgid "Edit"
 msgstr "Modifică"
@@ -2253,7 +2253,7 @@ msgstr "Compatibilitate"
 
 #: source/gx/tilix/prefeditor/profileeditor.d:103
 #: source/gx/tilix/prefeditor/profileeditor.d:693
-#: source/gx/tilix/prefeditor/profileeditor.d:1184
+#: source/gx/tilix/prefeditor/profileeditor.d:1193
 #: source/gx/tilix/terminal/layout.d:68
 msgid "Badge"
 msgstr "Insignă"
@@ -2325,7 +2325,7 @@ msgid "Unfocused"
 msgstr "Neațintit"
 
 #: source/gx/tilix/prefeditor/profileeditor.d:380
-#: source/gx/tilix/prefeditor/profileeditor.d:1208
+#: source/gx/tilix/prefeditor/profileeditor.d:1217
 msgid "Custom font"
 msgstr "Font personalizat"
 
@@ -2598,59 +2598,67 @@ msgstr "Îngust"
 msgid "Wide"
 msgstr "Lat"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1135
+#: source/gx/tilix/prefeditor/profileeditor.d:1119
+msgid "Enable Sixel image support (e.g. fastfetch/neofetch banners)"
+msgstr ""
+
+#: source/gx/tilix/prefeditor/profileeditor.d:1123
+msgid "Not supported by the installed version of VTE"
+msgstr ""
+
+#: source/gx/tilix/prefeditor/profileeditor.d:1144
 msgid "Run command as a login shell"
 msgstr "Execută comanda în shell de login"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1139
+#: source/gx/tilix/prefeditor/profileeditor.d:1148
 msgid "Run a custom command instead of my shell"
 msgstr "Execută o comandă personalizată în locul shell-ului meu"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1156
+#: source/gx/tilix/prefeditor/profileeditor.d:1165
 msgid "When command exits"
 msgstr "Când comanda se termină"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Exit the terminal"
 msgstr "Ieși din terminal"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Hold the terminal open"
 msgstr "Ține terminalul deschis"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1158
+#: source/gx/tilix/prefeditor/profileeditor.d:1167
 msgid "Restart the command"
 msgstr "Repornește comanda"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1198
+#: source/gx/tilix/prefeditor/profileeditor.d:1207
 msgid "Badge position"
 msgstr "Poziția insignei"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Northeast"
 msgstr "Nord-Est"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Northwest"
 msgstr "Nord-Vest"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Southeast"
 msgstr "Sud-Est"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1202
+#: source/gx/tilix/prefeditor/profileeditor.d:1211
 msgid "Southwest"
 msgstr "Sud-Vest"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1220
+#: source/gx/tilix/prefeditor/profileeditor.d:1229
 msgid "Choose A Badge Font"
 msgstr "Alege un Font pentru Insignă"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1258
+#: source/gx/tilix/prefeditor/profileeditor.d:1267
 msgid "Notify New Activity"
 msgstr "Notifică o Nouă Activitate"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1265
+#: source/gx/tilix/prefeditor/profileeditor.d:1274
 msgid ""
 "A notification can be raised when new activity occurs after a specified "
 "period of silence."
@@ -2658,11 +2666,11 @@ msgstr ""
 "O notificare poate fi declanșată când o nouă activitate apare după o "
 "perioadă specificată de liniște."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1278
+#: source/gx/tilix/prefeditor/profileeditor.d:1287
 msgid "Automatic Profile Switching"
 msgstr "Schimbare Automată de Profil"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1287
+#: source/gx/tilix/prefeditor/profileeditor.d:1296
 msgid ""
 "Profiles are automatically selected based on the values entered here.\n"
 "Values are entered using a <i>username@hostname:directory</i> format. Either "
@@ -2675,7 +2683,7 @@ msgstr ""
 "fie prezente. Intrările care nu au nici domeniu nici director nu sunt "
 "permise."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1289
+#: source/gx/tilix/prefeditor/profileeditor.d:1298
 msgid ""
 "Profiles are automatically selected based on the values entered here.\n"
 "Values are entered using a <i>hostname:directory</i> format. Either the "
@@ -2687,43 +2695,43 @@ msgstr ""
 "domeniul ori directorul poate fi omis, dar două puncte trebuie să fie "
 "prezente. Intrările care nu au nici domeniu nici director nu sunt permise."
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1301
+#: source/gx/tilix/prefeditor/profileeditor.d:1310
 msgid "Match"
 msgstr "Potrivire"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1316
+#: source/gx/tilix/prefeditor/profileeditor.d:1325
 msgid "Enter username@hostname:directory to match"
 msgstr "Introdu utilizator@domeniu:director ca să se potrivească"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1318
+#: source/gx/tilix/prefeditor/profileeditor.d:1327
 msgid "Enter hostname:directory to match"
 msgstr "Introdu domeniu:director ca să se potrivească"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1320
+#: source/gx/tilix/prefeditor/profileeditor.d:1329
 msgid "Add New Match"
 msgstr "Adaugă o Nouă Potrivire"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1337
+#: source/gx/tilix/prefeditor/profileeditor.d:1346
 msgid "Edit username@hostname:directory to match"
 msgstr "Modifică utilizator@domeniu:director ca să se potrivească"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1339
+#: source/gx/tilix/prefeditor/profileeditor.d:1348
 msgid "Edit hostname:directory to match"
 msgstr "Modifică domeniu:director ca să se potrivească"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1341
+#: source/gx/tilix/prefeditor/profileeditor.d:1350
 msgid "Edit Match"
 msgstr "Modifică o Potrivire"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1372
+#: source/gx/tilix/prefeditor/profileeditor.d:1381
 msgid "Enable by default"
 msgstr "Activează implicit"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1381
+#: source/gx/tilix/prefeditor/profileeditor.d:1390
 msgid "Threshold for continuous silence"
 msgstr "Prag pentru linișțe continuă"
 
-#: source/gx/tilix/prefeditor/profileeditor.d:1390
+#: source/gx/tilix/prefeditor/profileeditor.d:1399
 msgid "(seconds)"
 msgstr "(secunde)"
 
@@ -2746,48 +2754,48 @@ msgstr "Fereastră"
 msgid "Help"
 msgstr "Ajutor"
 
-#: source/gx/tilix/preferences.d:260
+#: source/gx/tilix/preferences.d:261
 msgid "UpdateState"
 msgstr "StareDeActualizare"
 
-#: source/gx/tilix/preferences.d:261
+#: source/gx/tilix/preferences.d:262
 msgid "ExecuteCommand"
 msgstr "ExecutăComanda"
 
-#: source/gx/tilix/preferences.d:262
+#: source/gx/tilix/preferences.d:263
 msgid "SendNotification"
 msgstr "TrimiteNotificare"
 
-#: source/gx/tilix/preferences.d:263
+#: source/gx/tilix/preferences.d:264
 msgid "UpdateTitle"
 msgstr "ActualizeazăTitlu"
 
-#: source/gx/tilix/preferences.d:264
+#: source/gx/tilix/preferences.d:265
 msgid "PlayBell"
 msgstr "RedăClopoțelul"
 
-#: source/gx/tilix/preferences.d:265
+#: source/gx/tilix/preferences.d:266
 msgid "SendText"
 msgstr "TrimiteText"
 
-#: source/gx/tilix/preferences.d:266
+#: source/gx/tilix/preferences.d:267
 msgid "InsertPassword"
 msgstr "IntroduceParolă"
 
-#: source/gx/tilix/preferences.d:267
+#: source/gx/tilix/preferences.d:268
 msgid "UpdateBadge"
 msgstr "ActualizeazăInsigna"
 
-#: source/gx/tilix/preferences.d:268
+#: source/gx/tilix/preferences.d:269
 msgid "RunProcess"
 msgstr "ExecutăProces"
 
-#: source/gx/tilix/preferences.d:269
+#: source/gx/tilix/preferences.d:270
 #, fuzzy
 msgid "ClipboardPrompt"
 msgstr "Clipboard"
 
-#: source/gx/tilix/preferences.d:380
+#: source/gx/tilix/preferences.d:381
 #, c-format
 msgid "%s (Copy)"
 msgstr "%s (Copiere)"
@@ -3064,7 +3072,7 @@ msgstr "Copiază Adresa de Legătură"
 
 #: source/gx/tilix/terminal/terminal.d:1911
 #: source/gx/tilix/terminal/terminal.d:1921
-#: source/gx/tilix/terminal/terminal.d:4424
+#: source/gx/tilix/terminal/terminal.d:4429
 msgid "Copy"
 msgstr "Copiază"
 
@@ -3105,7 +3113,7 @@ msgid "Remote File URI Unsupported"
 msgstr "Fișier la Distanță Nesuportat"
 
 #: source/gx/tilix/terminal/terminal.d:2154
-#: source/gx/tilix/terminal/terminal.d:2708
+#: source/gx/tilix/terminal/terminal.d:2713
 #, c-format
 msgid "Custom link regex '%s' has an error, ignoring"
 msgstr "Expresia regulată personalizată '%s' are o eroare, se ignoră"
@@ -3123,76 +3131,76 @@ msgstr "Nu s-a putut deschide '%s'"
 msgid "Error Opening Match"
 msgstr "Eroare de Deschidere"
 
-#: source/gx/tilix/terminal/terminal.d:2668
+#: source/gx/tilix/terminal/terminal.d:2673
 #, c-format
 msgid "Unexpected error occurred when adding link regex: %s"
 msgstr ""
 "Eroare neașteptată apărută în urma adăugării expresiei regulate pentru "
 "legături: %s"
 
-#: source/gx/tilix/terminal/terminal.d:2755
+#: source/gx/tilix/terminal/terminal.d:2760
 #, fuzzy, c-format
 msgid "Could not parse current directory URI '%s' due to error '%s'"
 msgstr "Nu s-a putut verifica fișierul '%s' din cauza erorii '%s'"
 
-#: source/gx/tilix/terminal/terminal.d:2872
+#: source/gx/tilix/terminal/terminal.d:2877
 msgid "Unexpected error occurred, no additional information available"
 msgstr "Eroare neașteptată apărută, nu sunt disponibile alte informații"
 
-#: source/gx/tilix/terminal/terminal.d:2882
+#: source/gx/tilix/terminal/terminal.d:2887
 #, c-format
 msgid "Unexpected error occurred: %s"
 msgstr "Eroare neașteptată apărută: %s"
 
-#: source/gx/tilix/terminal/terminal.d:3525
+#: source/gx/tilix/terminal/terminal.d:3530
 #, fuzzy, c-format
 msgid "Could not parse dropped URI '%s' due to error '%s'"
 msgstr "Nu s-a putut verifica fișierul '%s' din cauza erorii '%s'"
 
-#: source/gx/tilix/terminal/terminal.d:3776
+#: source/gx/tilix/terminal/terminal.d:3781
 msgid "Save Terminal Output"
 msgstr "Salvează Scrisul Produs în Terminal"
 
-#: source/gx/tilix/terminal/terminal.d:3785
+#: source/gx/tilix/terminal/terminal.d:3790
 msgid "All Text Files"
 msgstr "Toate Fișierele Text"
 
-#: source/gx/tilix/terminal/terminal.d:4115
+#: source/gx/tilix/terminal/terminal.d:4120
 msgid "Unknown"
 msgstr "Necunoscut"
 
-#: source/gx/tilix/terminal/terminal.d:4379
+#: source/gx/tilix/terminal/terminal.d:4384
 #, c-format
 msgid "The child process exited normally with status %d"
 msgstr "Procesul copil a ieșit normal cu statutul %d"
 
-#: source/gx/tilix/terminal/terminal.d:4380
+#: source/gx/tilix/terminal/terminal.d:4385
 #, c-format
 msgid "The child process was aborted by signal %d."
 msgstr "Procesul copil a fost încetat de către semnalul %d."
 
-#: source/gx/tilix/terminal/terminal.d:4381
+#: source/gx/tilix/terminal/terminal.d:4386
 msgid "The child process was aborted."
 msgstr "Procesul copil a fost încetat."
 
-#: source/gx/tilix/terminal/terminal.d:4387
+#: source/gx/tilix/terminal/terminal.d:4392
 msgid "Relaunch"
 msgstr "Relansare"
 
-#: source/gx/tilix/terminal/terminal.d:4424
+#: source/gx/tilix/terminal/terminal.d:4429
 msgid "Ignore"
 msgstr ""
 
-#: source/gx/tilix/terminal/terminal.d:4425
+#: source/gx/tilix/terminal/terminal.d:4430
 #, c-format
 msgid "Terminal wants to copy to clipboard: %s"
 msgstr ""
 
-#: source/gx/tilix/terminal/terminal.d:4477
+#: source/gx/tilix/terminal/terminal.d:4482
 msgid "Don't Paste"
 msgstr "Nu Lipi"
 
-#: source/gx/tilix/terminal/terminal.d:4478
+#: source/gx/tilix/terminal/terminal.d:4483
 msgid "Paste Anyway"
 msgstr "Lipește Oricum"
 

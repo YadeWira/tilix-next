@@ -629,6 +629,10 @@
       <default>true</default>
       <summary>Whether to rewrap the terminal contents on window resize</summary>
     </key>
+    <key name="enable-sixel" type="b">
+      <default>false</default>
+      <summary>Whether to enable the Sixel image protocol, letting programs draw images directly to the terminal (e.g. fastfetch/neofetch banners)</summary>
+    </key>
     <!-- Font -->
     <key name="use-system-font" type="b">
       <default>true</default>

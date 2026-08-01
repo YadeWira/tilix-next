@@ -1116,6 +1116,15 @@ private:
         grid.attach(cbCJK, 1, row, 1, 1);
         row++;
 
+        CheckButton cbEnableSixel = new CheckButton(_("Enable Sixel image support (e.g. fastfetch/neofetch banners)"));
+        bh.bind(SETTINGS_PROFILE_ENABLE_SIXEL_KEY, cbEnableSixel, "active", GSettingsBindFlags.DEFAULT);
+        if (!checkVTEFeature(TerminalFeature.SIXEL)) {
+            cbEnableSixel.setSensitive(false);
+            cbEnableSixel.setTooltipText(_("Not supported by the installed version of VTE"));
+        }
+        grid.attach(cbEnableSixel, 0, row, 2, 1);
+        row++;
+
         add(grid);
     }
 

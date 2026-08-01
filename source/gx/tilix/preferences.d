@@ -176,6 +176,7 @@ enum SETTINGS_PROFILE_SIZE_COLUMNS_KEY = "default-size-columns";
 enum SETTINGS_PROFILE_SIZE_ROWS_KEY = "default-size-rows";
 enum SETTINGS_PROFILE_ALLOW_BOLD_KEY = "allow-bold";
 enum SETTINGS_PROFILE_REWRAP_KEY = "rewrap-on-resize";
+enum SETTINGS_PROFILE_ENABLE_SIXEL_KEY = "enable-sixel";
 
 enum SETTINGS_PROFILE_CURSOR_SHAPE_KEY = "cursor-shape";
 enum SETTINGS_PROFILE_CURSOR_SHAPE_BLOCK_VALUE = "block";

@@ -2337,6 +2337,11 @@ private:
         case SETTINGS_PROFILE_REWRAP_KEY:
             vte.setRewrapOnResize(gsProfile.getBoolean(SETTINGS_PROFILE_REWRAP_KEY));
             break;
+        case SETTINGS_PROFILE_ENABLE_SIXEL_KEY:
+            if (checkVTEFeature(TerminalFeature.SIXEL)) {
+                vte.setEnableSixel(gsProfile.getBoolean(SETTINGS_PROFILE_ENABLE_SIXEL_KEY));
+            }
+            break;
         case SETTINGS_PROFILE_CURSOR_SHAPE_KEY:
             vte.setCursorShape(getCursorShape(gsProfile.getString(SETTINGS_PROFILE_CURSOR_SHAPE_KEY)));
             break;
@@ -2578,7 +2583,7 @@ private:
     void applyPreferences() {
         string[] keys = [
             SETTINGS_PROFILE_TERMINAL_BELL_KEY, SETTINGS_PROFILE_ALLOW_BOLD_KEY,
-            SETTINGS_PROFILE_REWRAP_KEY,
+            SETTINGS_PROFILE_REWRAP_KEY, SETTINGS_PROFILE_ENABLE_SIXEL_KEY,
             SETTINGS_PROFILE_CURSOR_SHAPE_KEY, // Only pass one color key, all colors will be applied
             SETTINGS_PROFILE_FG_COLOR_KEY, SETTINGS_PROFILE_SHOW_SCROLLBAR_KEY, SETTINGS_PROFILE_SCROLL_ON_OUTPUT_KEY,
             SETTINGS_PROFILE_SCROLL_ON_INPUT_KEY,
