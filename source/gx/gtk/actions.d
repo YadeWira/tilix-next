@@ -7,16 +7,17 @@ module gx.gtk.actions;
 import std.experimental.logger;
 import std.string;
 
-import gio.ActionMapIF;
-import gio.SimpleAction;
-import gio.Settings : GSettings = Settings;
+import gio.action_map : ActionMap;
+import gio.simple_action : SimpleAction;
+import gio.settings : GSettings = Settings;
 
-import glib.Variant: GVariant = Variant;
-import glib.VariantType: GVariantType = VariantType;
+import glib.variant : GVariant = Variant;
+import glib.variant_type : GVariantType = VariantType;
 
-import gtk.AccelGroup;
-import gtk.Application;
-import gtk.ApplicationWindow;
+import gtk.global : acceleratorGetLabel, acceleratorParse;
+import gtk.application : Application;
+
+import gdk.types : ModifierType;
 
 import gx.i18n.l10n;
 
@@ -29,9 +30,9 @@ enum SHORTCUT_DISABLED = N_("disabled");
  */
 string acceleratorNameToLabel(string acceleratorName) {
     uint acceleratorKey;
-    GdkModifierType acceleratorMods;
-    AccelGroup.acceleratorParse(acceleratorName, acceleratorKey, acceleratorMods);
-    string label = AccelGroup.acceleratorGetLabel(acceleratorKey, acceleratorMods);
+    ModifierType acceleratorMods;
+    acceleratorParse(acceleratorName, acceleratorKey, acceleratorMods);
+    string label = acceleratorGetLabel(acceleratorKey, acceleratorMods);
     if (label == "") {
       label = _(SHORTCUT_DISABLED);
     }
@@ -89,7 +90,7 @@ string keyToDetailedActionName(string key) {
     *
     * Returns: The registered action.
     */
-SimpleAction registerActionWithSettings(ActionMapIF actionMap, string prefix, string id, GSettings settings, void delegate(GVariant,
+SimpleAction registerActionWithSettings(ActionMap actionMap, string prefix, string id, GSettings settings, void delegate(GVariant,
         SimpleAction) cbActivate = null, GVariantType type = null, GVariant state = null, void delegate(GVariant,
         SimpleAction) cbStateChange = null) {
 
@@ -125,21 +126,21 @@ SimpleAction registerActionWithSettings(ActionMapIF actionMap, string prefix, st
     *
     * Returns: The registered action.
     */
-SimpleAction registerAction(ActionMapIF actionMap, string prefix, string id, string[] accelerators = null, void delegate(GVariant,
+SimpleAction registerAction(ActionMap actionMap, string prefix, string id, string[] accelerators = null, void delegate(GVariant,
         SimpleAction) cbActivate = null, GVariantType parameterType = null, GVariant state = null, void delegate(GVariant,
         SimpleAction) cbStateChange = null) {
     SimpleAction action;
     if (state is null)
         action = new SimpleAction(id, parameterType);
     else {
-        action = new SimpleAction(id, parameterType, state);
+        action = SimpleAction.newStateful(id, parameterType, state);
     }
 
     if (cbActivate !is null)
-        action.addOnActivate(cbActivate);
+        action.connectActivate(cbActivate);
 
     if (cbStateChange !is null)
-        action.addOnChangeState(cbStateChange);
+        action.connectChangeState(cbStateChange);
 
     actionMap.addAction(action);
 

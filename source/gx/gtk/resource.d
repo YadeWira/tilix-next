@@ -10,18 +10,18 @@ import std.experimental.logger;
 import std.file;
 import std.path;
 
-import gdk.Screen;
+import gdk.display : Display;
 
-import glib.Bytes;
-import glib.GException;
-import glib.Util;
+import glib.bytes : Bytes;
+import glib.error : GException = ErrorWrap;
+import glib.global : getSystemDataDirs;
 
-import gio.Resource;
+import gio.resource : Resource;
+import gio.global : resourcesLookupData, resourcesRegister;
+import gio.types : ResourceLookupFlags;
 
-import gtk.CssProvider;
-import gtk.StyleContext;
-
-import gtkc.giotypes;
+import gtk.css_provider : CssProvider;
+import gtk.style_context : StyleContext;
 
 /**
  * Defined here since not defined in GtkD
@@ -38,14 +38,14 @@ enum ProviderPriority : uint {
  * Find and optionally register a resource
  */
 Resource findResource(string resourcePath, bool register = true) {
-    foreach (path; Util.getSystemDataDirs()) {
+    foreach (path; getSystemDataDirs()) {
         auto fullpath = buildPath(path, resourcePath);
         trace("looking for resource " ~ fullpath);
         if (exists(fullpath)) {
             Resource resource = Resource.load(fullpath);
             if (register && resource) {
                 trace("Resource found and registered " ~ fullpath);
-                Resource.register(resource);
+                resourcesRegister(resource);
             }
             return resource;
         }
@@ -59,9 +59,8 @@ CssProvider createCssProvider(string filename, string[string] variables = null) 
         CssProvider provider = new CssProvider();
         string css = getResource(filename, variables);
         if (css.length > 0) {
-            if (provider.loadFromData(css)) {
-                return provider;
-            }
+            provider.loadFromString(css);
+            return provider;
         }
     } catch (GException ge) {
         trace("Unexpected error loading css provider " ~ filename);
@@ -74,16 +73,16 @@ CssProvider createCssProvider(string filename, string[string] variables = null) 
  * Adds a CSSProvider to the default screen, if no provider is found it
  * returns null
  */
-CssProvider addCssProvider(string filename, ProviderPriority priority, string[string] variables = null) {
+CssProvider addCssProvider(string filename, uint priority, string[string] variables = null) {
     try {
         CssProvider provider = createCssProvider(filename, variables);
         if (provider !is null) {
-            Screen screen = Screen.getDefault();
-            if (screen !is null) {
-                StyleContext.addProviderForScreen(Screen.getDefault(), provider, priority);
+            Display display = Display.getDefault();
+            if (display !is null) {
+                StyleContext.addProviderForDisplay(display, provider, priority);
                 return provider;
             } else {
-                warning("Default screen is null, no CSS provider added and as a result Tilix UI may appear incorrect");
+                warning("Default display is null, no CSS provider added and as a result Tilix UI may appear incorrect");
                 return null;
             }
         }
@@ -100,7 +99,7 @@ CssProvider addCssProvider(string filename, ProviderPriority priority, string[st
 string getResource(string filename, string[string] variables = null) {
     Bytes bytes;
     try {
-        bytes = Resource.resourcesLookupData(filename, GResourceLookupFlags.NONE);
+        bytes = resourcesLookupData(filename, ResourceLookupFlags.None);
     } catch (GException ge) {
         return null;
     }
