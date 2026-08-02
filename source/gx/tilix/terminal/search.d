@@ -7,34 +7,37 @@ module gx.tilix.terminal.search;
 import std.experimental.logger;
 import std.format;
 
-import gdk.Event;
-import gdk.Keysyms;
+import gdk.types : KEY_Escape, KEY_Return, ModifierType;
 
-import gio.ActionGroupIF;
-import gio.Menu;
-import gio.Settings : GSettings = Settings;
-import gio.SimpleAction;
-import gio.SimpleActionGroup;
+import gio.action_group : ActionGroup;
+import gio.menu : Menu;
+import gio.settings : GSettings = Settings;
+import gio.simple_action : SimpleAction;
+import gio.simple_action_group : SimpleActionGroup;
 
-import glib.GException;
-import glib.Regex: GRegex = Regex;
-import glib.Variant : GVariant = Variant;
+import glib.error : GException = ErrorWrap;
+import glib.regex: GRegex = Regex;
+import glib.variant : GVariant = Variant;
 
-import gtk.Box;
-import gtk.Button;
-import gtk.CheckButton;
-import gtk.Frame;
-import gtk.Image;
-import gtk.MenuButton;
-import gtk.Popover;
-import gtk.Revealer;
-import gtk.SearchEntry;
-import gtk.ToggleButton;
-import gtk.Widget;
-import gtk.Version;
+import gtk.box : Box;
+import gtk.button : Button;
+import gtk.check_button : CheckButton;
+import gtk.event_controller_focus : EventControllerFocus;
+import gtk.event_controller_key : EventControllerKey;
+import gtk.frame : Frame;
+import gtk.image : Image;
+import gtk.menu_button : MenuButton;
+import gtk.popover : Popover;
+import gtk.popover_menu : PopoverMenu;
+import gtk.revealer : Revealer;
+import gtk.root : Root;
+import gtk.search_entry : SearchEntry;
+import gtk.toggle_button : ToggleButton;
+import gtk.types : Align, Orientation;
+import gtk.widget : Widget;
 
-import vte.Regex: VRegex = Regex;
-import vte.Terminal : VTE = Terminal;
+import vte.regex: VRegex = Regex;
+import vte.terminal : VTE = Terminal;
 
 import gx.gtk.actions;
 import gx.gtk.vte;
@@ -61,7 +64,7 @@ private:
     GSettings gsSettings;
 
     VTE vte;
-    ActionGroupIF terminalActions;
+    ActionGroup terminalActions;
     SimpleActionGroup sagSearch;
 
     SearchEntry seSearch;
@@ -79,92 +82,101 @@ private:
 
         setHexpand(true);
         setVexpand(false);
-        setHalign(GtkAlign.FILL);
-        setValign(GtkAlign.START);
+        setHalign(Align.Fill);
+        setValign(Align.Start);
 
-        Box bSearch = new Box(Orientation.HORIZONTAL, 6);
-        bSearch.setHalign(GtkAlign.CENTER);
-        bSearch.setMarginLeft(4);
-        bSearch.setMarginRight(4);
+        Box bSearch = new Box(Orientation.Horizontal, 6);
+        bSearch.setHalign(Align.Center);
+        bSearch.setMarginStart(4);
+        bSearch.setMarginEnd(4);
         bSearch.setMarginTop(4);
         bSearch.setMarginBottom(4);
         bSearch.setHexpand(true);
 
-        Box bEntry = new Box(Orientation.HORIZONTAL, 0);
-        bEntry.getStyleContext().addClass("linked");
+        Box bEntry = new Box(Orientation.Horizontal, 0);
+        bEntry.addCssClass("linked");
 
         seSearch = new SearchEntry();
         seSearch.setWidthChars(1);
         seSearch.setMaxWidthChars(30);
-        if (Version.checkVersion(3, 20, 0).length != 0) {
-            seSearch.getStyleContext().addClass("tilix-search-entry");
-        }
-        seSearch.addOnSearchChanged(delegate(SearchEntry) {
+        // The "tilix-search-entry" padding workaround was only applied when
+        // gtk_check_version(3, 20, 0) reported a mismatch, i.e. on GTK older than
+        // 3.20; it was already dead on any GTK 3.20+ runtime. It cannot be kept as
+        // written: under GTK4 gtk_check_version(3, 20, 0) reports "version too new
+        // (major mismatch)", which is also a non-empty string, so the branch would
+        // start firing on every run. Dropped so behaviour matches GTK 3.20+.
+        seSearch.connectSearchChanged(delegate() {
             setTerminalSearchCriteria();
         });
-        seSearch.addOnKeyRelease(delegate(Event event, Widget) {
-            uint keyval;
-            if (event.getKeyval(keyval)) {
-                switch (keyval) {
-                    case GdkKeysyms.GDK_Escape:
-                        setRevealChild(false);
-                        vte.grabFocus();
-                        break;
-                    case GdkKeysyms.GDK_Return:
-                        if (event.key.state & GdkModifierType.SHIFT_MASK) {
-                            terminalActions.activateAction(ACTION_FIND_NEXT, null);
-                        } else {
-                            terminalActions.activateAction(ACTION_FIND_PREVIOUS, null);
-                        }
-                        break;
-                    default:
-                }
+        // GTK4: key events are delivered through an EventControllerKey instead of
+        // GtkWidget::key-release-event. The modifier state is a signal parameter now,
+        // there is no GdkEvent to unpack, and the handler cannot stop propagation
+        // (key-released has no return value) - the GTK3 code returned false anyway.
+        EventControllerKey ecKey = new EventControllerKey();
+        ecKey.connectKeyReleased(delegate(uint keyval, uint keycode, ModifierType state) {
+            switch (keyval) {
+                case KEY_Escape:
+                    setRevealChild(false);
+                    vte.grabFocus();
+                    break;
+                case KEY_Return:
+                    if (state & ModifierType.ShiftMask) {
+                        terminalActions.activateAction(ACTION_FIND_NEXT, null);
+                    } else {
+                        terminalActions.activateAction(ACTION_FIND_PREVIOUS, null);
+                    }
+                    break;
+                default:
             }
-            return false;
         });
-        bEntry.add(seSearch);
+        seSearch.addController(ecKey);
+        bEntry.append(seSearch);
 
         mbOptions = new MenuButton();
         mbOptions.setTooltipText(_("Search Options"));
         mbOptions.setFocusOnClick(false);
-        Image iHamburger = new Image("pan-down-symbolic", IconSize.MENU);
-        mbOptions.add(iHamburger);
+        Image iHamburger = Image.newFromIconName("pan-down-symbolic");
+        mbOptions.setChild(iHamburger);
         mbOptions.setPopover(createPopover);
-        bEntry.add(mbOptions);
+        bEntry.append(mbOptions);
 
-        bSearch.add(bEntry);
+        bSearch.append(bEntry);
 
-        Box bButtons = new Box(Orientation.HORIZONTAL, 0);
-        bButtons.getStyleContext().addClass("linked");
+        Box bButtons = new Box(Orientation.Horizontal, 0);
+        bButtons.addCssClass("linked");
 
-        Button btnNext = new Button("go-up-symbolic", IconSize.MENU);
+        Button btnNext = Button.newFromIconName("go-up-symbolic");
         btnNext.setTooltipText(_("Find next"));
         btnNext.setActionName(getActionDetailedName(ACTION_PREFIX, ACTION_FIND_PREVIOUS));
         btnNext.setCanFocus(false);
-        bButtons.add(btnNext);
+        bButtons.append(btnNext);
 
-        Button btnPrevious = new Button("go-down-symbolic", IconSize.MENU);
+        Button btnPrevious = Button.newFromIconName("go-down-symbolic");
         btnPrevious.setTooltipText(_("Find previous"));
         btnPrevious.setActionName(getActionDetailedName(ACTION_PREFIX, ACTION_FIND_NEXT));
         btnPrevious.setCanFocus(false);
-        bButtons.add(btnPrevious);
+        bButtons.append(btnPrevious);
 
-        bSearch.add(bButtons);
+        bSearch.append(bButtons);
 
-        Button btnClose = new Button("window-close-symbolic", IconSize.MENU);
+        Button btnClose = Button.newFromIconName("window-close-symbolic");
         btnClose.setTooltipText(_("Close search box"));
-        btnClose.setRelief(ReliefStyle.NONE);
+        // GTK4: GtkReliefStyle is gone, gtk_button_set_has_frame(false) is the replacement.
+        btnClose.setHasFrame(false);
         btnClose.setFocusOnClick(true);
-        btnClose.addOnClicked(delegate(Button) {
+        btnClose.connectClicked(delegate() {
             setRevealChild(false);
             vte.grabFocus();
         });
-        bSearch.packEnd(btnClose, false, false, 0);
+        // GTK4: no gtk_box_pack_end. The close button was the last child of a
+        // horizontal box anyway, so appending puts it in the same place.
+        bSearch.append(btnClose);
 
-        Frame frame = new Frame(bSearch, null);
-        frame.setShadowType(ShadowType.NONE);
-        frame.getStyleContext().addClass("tilix-search-frame");
-        add(frame);
+        Frame frame = new Frame(null);
+        frame.setChild(bSearch);
+        // GTK4: GtkFrame has no shadow type any more, framing is done purely with CSS.
+        frame.addCssClass("tilix-search-frame");
+        setChild(frame);
     }
 
     void createActions() {
@@ -207,12 +219,14 @@ private:
         model.append(_("Wrap around"), getActionDetailedName(ACTION_SEARCH_PREFIX, ACTION_SEARCH_WRAP_AROUND));
         model.append(_("Match as regular expression"), getActionDetailedName(ACTION_SEARCH_PREFIX, ACTION_SEARCH_MATCH_REGEX));
 
-        return new Popover(mbOptions, model);
+        // GTK4: popovers have no relative-to widget, they are positioned by the
+        // widget they get attached to (the MenuButton below).
+        return PopoverMenu.newFromModel(model);
     }
 
     void updateActionsState()
     {
-        auto action = cast(SimpleAction) sagSearch.lookup(ACTION_SEARCH_MATCH_REGEX);
+        auto action = cast(SimpleAction) sagSearch.lookupAction(ACTION_SEARCH_MATCH_REGEX);
         bool alwaysUseRegex = gsSettings.getBoolean(SETTINGS_ALWAYS_USE_REGEX_IN_SEARCH);
         action.setEnabled(!alwaysUseRegex);
         action.setState(new GVariant(alwaysUseRegex));
@@ -237,11 +251,11 @@ private:
                 flags |= PCRE2Flags.CASELESS;
             }
             trace("Setting VTE.Regex for pattern %s", text);
-            vte.searchSetRegex(VRegex.newSearch(text, -1, flags), 0);
-            seSearch.getStyleContext().removeClass("error");
+            vte.searchSetRegex(VRegex.newForSearch(text, flags), 0);
+            seSearch.removeCssClass("error");
         } catch (GException ge) {
             string message = format(_("Search '%s' is not a valid regex\n%s"), text, ge.msg);
-            seSearch.getStyleContext().addClass("error");
+            seSearch.addCssClass("error");
             error(message);
             error(ge.msg);
         }
@@ -249,7 +263,7 @@ private:
 
 public:
 
-    this(VTE vte, ActionGroupIF terminalActions) {
+    this(VTE vte, ActionGroup terminalActions) {
         super();
 
         this.vte = vte;
@@ -257,35 +271,57 @@ public:
 
         gsSettings = new GSettings(SETTINGS_ID);
         createUI();
-        gsSettings.addOnChanged(delegate(string key, GSettings) {
+        gsSettings.connectChanged(null, delegate(string key) {
             if (key == SETTINGS_ALWAYS_USE_REGEX_IN_SEARCH)
                 updateActionsState();
         });
 
-        this.addOnDestroy(delegate(Widget) {
+        this.connectDestroy(delegate() {
             this.vte = null;
             this.terminalActions = null;
         });
-        seSearch.addOnFocusIn(delegate(Event event, Widget widget) {
-            onSearchEntryFocusIn.emit(widget);
-            return false;
+        // GTK4: GtkWidget::focus-in-event is gone, focus is reported by an
+        // EventControllerFocus. The controller only passes itself to the handler,
+        // so the widget the signal is about is the entry the controller is on.
+        EventControllerFocus ecFocus = new EventControllerFocus();
+        ecFocus.connectEnter(delegate() {
+            onSearchEntryFocusIn.emit(seSearch);
         });
-        seSearch.addOnFocusIn(delegate(Event event, Widget widget) {
-            onSearchEntryFocusOut.emit(widget);
-            return false;
+        // Note: the GTK3 code connected this to focus-in as well, not focus-out,
+        // so it is kept on ::enter here to preserve the existing behaviour.
+        ecFocus.connectEnter(delegate() {
+            onSearchEntryFocusOut.emit(seSearch);
         });
+        seSearch.addController(ecFocus);
     }
 
     void focusSearchEntry() {
         seSearch.grabFocus();
     }
 
+    /**
+     * Whether keyboard focus is inside the search entry.
+     *
+     * GTK3's GtkSearchEntry was a GtkEntry and took focus itself, so asking the
+     * widget was enough. In GTK4 it is a plain GtkWidget that is not focusable
+     * and wraps an internal GtkText; the root's focus widget is that GtkText,
+     * never the SearchEntry, so seSearch.hasFocus() would answer false the whole
+     * time the user is typing. Resolve it through the focused descendant instead.
+     */
+    private bool searchEntryHoldsFocus() {
+        Root root = seSearch.getRoot();
+        if (root is null) return false;
+        Widget focus = root.getFocus();
+        if (focus is null) return false;
+        return focus is seSearch || focus.isAncestor(seSearch);
+    }
+
     bool hasSearchEntryFocus() {
-        return seSearch.hasFocus();
+        return searchEntryHoldsFocus();
     }
 
     bool isSearchEntryFocus() {
-        return seSearch.isFocus();
+        return searchEntryHoldsFocus();
     }
 
     GenericEvent!(Widget) onSearchEntryFocusIn;

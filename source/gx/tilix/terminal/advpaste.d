@@ -7,23 +7,26 @@ module gx.tilix.terminal.advpaste;
 import std.experimental.logger;
 import std.format;
 import std.string;
+import std.typecons : No;
 
-import gdk.Event;
-import gdk.Keysyms;
+import gdk.types : KEY_Return, ModifierType;
 
-import gio.Settings: GSettings = Settings;
+import gio.settings : GSettings = Settings;
+import gio.types : SettingsBindFlags;
 
-import gtk.Box;
-import gtk.CheckButton;
-import gtk.Dialog;
-import gtk.Label;
-import gtk.SpinButton;
-import gtk.TextBuffer;
-import gtk.TextTagTable;
-import gtk.TextView;
-import gtk.ScrolledWindow;
-import gtk.Widget;
-import gtk.Window;
+import gtk.box : Box;
+import gtk.check_button : CheckButton;
+import gtk.dialog : Dialog;
+import gtk.event_controller_key : EventControllerKey;
+import gtk.label : Label;
+import gtk.spin_button : SpinButton;
+import gtk.text_buffer : TextBuffer;
+import gtk.text_iter : TextIter;
+import gtk.text_tag_table : TextTagTable;
+import gtk.text_view : TextView;
+import gtk.scrolled_window : ScrolledWindow;
+import gtk.types : Align, Orientation, PolicyType, PropagationPhase, ResponseType;
+import gtk.window : Window;
 
 import gx.i18n.l10n;
 
@@ -56,71 +59,82 @@ private:
 
     void createUI(string text, bool unsafe) {
         with (getContentArea()) {
-            setMarginLeft(18);
-            setMarginRight(18);
+            setMarginStart(18);
+            setMarginEnd(18);
             setMarginTop(18);
             setMarginBottom(18);
         }
 
-        Box b = new Box(Orientation.VERTICAL, 6);
+        Box b = new Box(Orientation.Vertical, 6);
         if (unsafe) {
             string[3] msg = getUnsafePasteMessage();
             Label lblUnsafe = new Label("<span weight='bold' size='large'>" ~ msg[0] ~ "</span>\n" ~ msg[1] ~ "\n" ~ msg[2]);
             lblUnsafe.setUseMarkup(true);
-            lblUnsafe.setLineWrap(true);
-            b.add(lblUnsafe);
-            getWidgetForResponse(ResponseType.APPLY).getStyleContext().addClass("destructive-action");
+            lblUnsafe.setWrap(true);
+            b.append(lblUnsafe);
+            // GTK4 removed the style context class API, the class goes on the widget itself now.
+            getWidgetForResponse(ResponseType.Apply).addCssClass("destructive-action");
         }
 
         buffer = new TextBuffer(new TextTagTable());
         buffer.setText(text);
-        TextView view = new TextView(buffer);
-        view.addOnKeyPress(delegate(Event event, Widget w) {
-            uint keyval;
-            event.getKeyval(keyval);
-            if (keyval == GdkKeysyms.GDK_Return && (event.key.state & GdkModifierType.CONTROL_MASK)) {
-                response(GtkResponseType.APPLY);
+        TextView view = TextView.newWithBuffer(buffer);
+        // GTK4 has no key-press-event signal, key handling is an event controller. The GTK3
+        // handler ran ahead of the TextView's own default handler, so use the capture phase
+        // to keep Ctrl+Return from being swallowed as a newline.
+        EventControllerKey kc = new EventControllerKey();
+        kc.setPropagationPhase(PropagationPhase.Capture);
+        kc.connectKeyPressed(delegate(uint keyval, uint keycode, ModifierType state) {
+            if (keyval == KEY_Return && (state & ModifierType.ControlMask)) {
+                response(ResponseType.Apply);
                 return true;
             }
             return false;
         });
-        ScrolledWindow sw = new ScrolledWindow(view);
-        sw.setShadowType(ShadowType.ETCHED_IN);
-        sw.setPolicy(PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
+        view.addController(kc);
+        ScrolledWindow sw = new ScrolledWindow();
+        sw.setChild(view);
+        // GTK4 replaced GtkScrolledWindow's shadow-type with the boolean has-frame.
+        sw.setHasFrame(true);
+        sw.setPolicy(PolicyType.Automatic, PolicyType.Automatic);
         sw.setHexpand(true);
         sw.setVexpand(true);
         sw.setSizeRequest(400, 140);
 
-        b.add(sw);
+        b.append(sw);
 
         Label lblTransform = new Label(format("<b>%s</b>", _("Transform")));
         lblTransform.setUseMarkup(true);
-        lblTransform.setHalign(GtkAlign.START);
+        lblTransform.setHalign(Align.Start);
         lblTransform.setMarginTop(6);
-        b.add(lblTransform);
+        b.append(lblTransform);
 
         //Tabs to Spaces
-        Box bTabs = new Box(Orientation.HORIZONTAL, 6);
-        cbTabsToSpaces = new CheckButton(_("Convert spaces to tabs"));
-        gsSettings.bind(SETTINGS_ADVANCED_PASTE_REPLACE_TABS_KEY, cbTabsToSpaces, "active", GSettingsBindFlags.DEFAULT);
-        bTabs.add(cbTabsToSpaces);
+        Box bTabs = new Box(Orientation.Horizontal, 6);
+        cbTabsToSpaces = CheckButton.newWithMnemonic(_("Convert spaces to tabs"));
+        gsSettings.bind(SETTINGS_ADVANCED_PASTE_REPLACE_TABS_KEY, cbTabsToSpaces, "active", SettingsBindFlags.Default);
+        bTabs.append(cbTabsToSpaces);
 
-        sbTabWidth = new SpinButton(0, 32, 1);
-        gsSettings.bind(SETTINGS_ADVANCED_PASTE_SPACE_COUNT_KEY, sbTabWidth.getAdjustment(), "value", GSettingsBindFlags.DEFAULT);
-        gsSettings.bind(SETTINGS_ADVANCED_PASTE_REPLACE_TABS_KEY, sbTabWidth, "sensitive", GSettingsBindFlags.DEFAULT);
-        bTabs.add(sbTabWidth);
+        sbTabWidth = SpinButton.newWithRange(0, 32, 1);
+        gsSettings.bind(SETTINGS_ADVANCED_PASTE_SPACE_COUNT_KEY, sbTabWidth.getAdjustment(), "value", SettingsBindFlags.Default);
+        gsSettings.bind(SETTINGS_ADVANCED_PASTE_REPLACE_TABS_KEY, sbTabWidth, "sensitive", SettingsBindFlags.Default);
+        bTabs.append(sbTabWidth);
 
-        b.add(bTabs);
+        b.append(bTabs);
 
-        cbConvertCRLF = new CheckButton(_("Convert CRLF and CR to LF"));
-        gsSettings.bind(SETTINGS_ADVANCED_PASTE_REPLACE_CRLF_KEY, cbConvertCRLF, "active", GSettingsBindFlags.DEFAULT);
-        b.add(cbConvertCRLF);
+        cbConvertCRLF = CheckButton.newWithMnemonic(_("Convert CRLF and CR to LF"));
+        gsSettings.bind(SETTINGS_ADVANCED_PASTE_REPLACE_CRLF_KEY, cbConvertCRLF, "active", SettingsBindFlags.Default);
+        b.append(cbConvertCRLF);
 
-        getContentArea().add(b);
+        getContentArea().append(b);
     }
 
     string transform() {
-        string text = buffer.getText();
+        // GID has no argument-less TextBuffer.getText(); gtk-d's built the bounds and
+        // called get_slice with hidden characters included, so do that here.
+        TextIter start, end;
+        buffer.getBounds(start, end);
+        string text = buffer.getSlice(start, end, true);
         if (gsSettings.getBoolean(SETTINGS_ADVANCED_PASTE_REPLACE_TABS_KEY)) {
             text = text.detab(gsSettings.getInt(SETTINGS_ADVANCED_PASTE_SPACE_COUNT_KEY));
         }
@@ -134,9 +148,16 @@ private:
 
 public:
     this(Window parent, string text, bool unsafe) {
-        super(_("Advanced Paste"), parent, GtkDialogFlags.MODAL + GtkDialogFlags.USE_HEADER_BAR, [_("Paste"), _("Cancel")], [GtkResponseType.APPLY, GtkResponseType.CANCEL]);
+        // GID does not bind the variadic gtk_dialog_new_with_buttons, and use-header-bar is
+        // construct-only, so the instance has to come from the GID builder to keep the header
+        // bar. Everything the old constructor arguments carried is set explicitly below.
+        super(cast(void*) Dialog.builder().useHeaderBar(1).createGObject(Dialog._getGType), No.Take);
+        setTitle(_("Advanced Paste"));
+        setModal(true);
+        addButton(_("Paste"), ResponseType.Apply);
+        addButton(_("Cancel"), ResponseType.Cancel);
         setTransientFor(parent);
-        setDefaultResponse(GtkResponseType.APPLY);
+        setDefaultResponse(ResponseType.Apply);
         gsSettings = new GSettings(SETTINGS_ID);
         createUI(text, unsafe);
     }

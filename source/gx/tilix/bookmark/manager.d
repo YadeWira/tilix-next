@@ -13,16 +13,26 @@ import std.json;
 import std.path;
 import std.uuid;
 
-import gdk.Pixbuf;
-import gdk.RGBA;
-import gdk.Screen;
+import cairo.global : cairoCreate = create, imageSurfaceCreate;
+import cairo.surface : Surface;
+import cairo.types : Format;
 
-import glib.Util;
+import gdk.display : Display;
+import gdk.global : pixbufGetFromSurface;
+import gdk.rgba : RGBA;
 
-import gtk.IconInfo;
-import gtk.IconTheme;
-import gtk.StyleContext;
-import gtk.Widget;
+import gdkpixbuf.pixbuf : Pixbuf;
+
+import glib.global : getUserConfigDir;
+
+import gsk.render_node : RenderNode;
+
+import gtk.icon_paintable : IconPaintable;
+import gtk.icon_theme : IconTheme;
+import gtk.snapshot : Snapshot;
+import gtk.style_context : StyleContext;
+import gtk.types : IconLookupFlags, TextDirection;
+import gtk.widget : Widget;
 
 import gx.i18n.l10n;
 
@@ -595,7 +605,7 @@ public:
     }
 
     void save() {
-        string path = buildPath(Util.getUserConfigDir(), APPLICATION_CONFIG_FOLDER);
+        string path = buildPath(getUserConfigDir(), APPLICATION_CONFIG_FOLDER);
         if (!exists(path)) {
             mkdirRecurse(path);
         }
@@ -605,7 +615,7 @@ public:
     }
 
     void load() {
-        string filename = buildPath(Util.getUserConfigDir(), APPLICATION_CONFIG_FOLDER, BOOKMARK_FILE);
+        string filename = buildPath(getUserConfigDir(), APPLICATION_CONFIG_FOLDER, BOOKMARK_FILE);
         if (exists(filename)) {
             try {
                 string json = readText(filename);
@@ -642,7 +652,8 @@ Pixbuf[] getBookmarkIcons(Widget widget) {
     if (bmIcons.length > 0) return bmIcons;
     string[] names = ["folder-symbolic","mark-location-symbolic","folder-remote-symbolic", "application-x-executable-symbolic"];
     Pixbuf[] icons;
-    IconTheme iconTheme = IconTheme.getForScreen(Screen.getDefault());
+    // GdkScreen is gone in GTK4, the icon theme is per GdkDisplay now.
+    IconTheme iconTheme = IconTheme.getForDisplay(Display.getDefault());
     if (iconTheme is null) {
         error("IconTheme could not be loaded");
         return [null, null, null, null];
@@ -654,12 +665,35 @@ Pixbuf[] getBookmarkIcons(Widget widget) {
         return [null, null, null, null];
     }
     foreach(name; names) {
-        IconInfo iconInfo = iconTheme.lookupIcon(name, 16, IconLookupFlags.GENERIC_FALLBACK);
-        bool wasSymbolic;
-        icons ~= iconInfo.loadSymbolic(fg, null, null, null, wasSymbolic);
+        // GTK4 dropped GTK_ICON_LOOKUP_GENERIC_FALLBACK; the theme always
+        // returns a paintable now (image-missing when the name is unknown).
+        IconPaintable iconPaintable = iconTheme.lookupIcon(name, null, 16, 1, TextDirection.None, IconLookupFlags.ForceSymbolic);
+        icons ~= renderSymbolicIcon(iconPaintable, fg);
     }
     bmIcons = icons;
     return icons;
+}
+
+/**
+ * GTK4 removed GtkIconInfo and gtk_icon_info_load_symbolic(), so there is no
+ * longer any call that hands back a recoloured GdkPixbuf. The replacement,
+ * GtkIconPaintable, only recolours itself while being snapshotted, so snapshot
+ * it against a plain image surface and pull the pixbuf back out of that. Only
+ * the foreground colour is honoured; the old success/warning/error colours were
+ * always passed as null here anyway.
+ */
+private Pixbuf renderSymbolicIcon(IconPaintable iconPaintable, RGBA fg) {
+    if (iconPaintable is null) return null;
+
+    Snapshot snapshot = new Snapshot();
+    iconPaintable.snapshotSymbolic(snapshot, 16, 16, [fg]);
+    RenderNode node = snapshot.toNode();
+    if (node is null) return null;
+
+    Surface surface = imageSurfaceCreate(Format.Argb32, 16, 16);
+    auto cr = cairoCreate(surface);
+    node.draw(cr);
+    return pixbufGetFromSurface(surface, 0, 0, 16, 16);
 }
 
 /**

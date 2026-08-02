@@ -4,6 +4,11 @@
 }
 
 .tilix-search-frame {
+    /* GTK4 removed GtkFrame's shadow-type, and the theme styles the frame node
+       with a full rounded border by default. GTK3 suppressed that with
+       ShadowType.NONE and drew only the bottom rule, so reset it explicitly. */
+    border: none;
+    border-radius: 0;
     border-bottom: 1px solid @borders;
 }
 
