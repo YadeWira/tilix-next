@@ -57,7 +57,7 @@ string rgbaTo16bitHex(RGBA color, bool includeAlpha = false, bool includeHash = 
 }
 
 RGBA getOppositeColor(RGBA rgba) {
-    RGBA result = new RGBA(1.0 - rgba.red, 1 - rgba.green, 1 - rgba.red, rgba.alpha);
+    RGBA result = new RGBA(1.0 - rgba.red, 1 - rgba.green, 1 - rgba.blue, rgba.alpha);
     tracef("Original: %s, New: %s", rgbaTo8bitHex(rgba, true, true), rgbaTo8bitHex(result, true, true));
     return result;
 }
