@@ -11,9 +11,9 @@ import std.range;
 import std.string;
 import std.uuid;
 
-import gio.Settings : GSettings = Settings;
+import gio.settings : GSettings = Settings;
 
-import glib.Variant : GVariant = Variant;
+import glib.variant : GVariant = Variant;
 
 import gx.i18n.l10n;
 import gx.util.array;
@@ -521,7 +521,7 @@ public:
 	 * @param uuid The identifier of the profile
 	 */
     GSettings getProfileSettings(string uuid) {
-        return new GSettings(SETTINGS_PROFILE_ID, getProfilePath(uuid));
+        return GSettings.newWithPath(SETTINGS_PROFILE_ID, getProfilePath(uuid));
     }
 
     /**

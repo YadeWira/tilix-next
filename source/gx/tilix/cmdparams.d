@@ -10,11 +10,11 @@ import std.regex;
 import std.stdio;
 import std.string;
 
-import gio.ApplicationCommandLine;
+import gio.application_command_line : ApplicationCommandLine;
 
-import glib.VariantDict;
-import glib.Variant : GVariant = Variant;
-import glib.VariantType : GVariantType = VariantType;
+import glib.variant_dict : VariantDict;
+import glib.variant : GVariant = Variant;
+import glib.variant_type : GVariantType = VariantType;
 
 import gx.i18n.l10n;
 import gx.util.path;
@@ -106,8 +106,9 @@ private:
         if (value is null)
             return "";
         else {
-            size_t l;
-            return value.getString(l);
+            // GID's Variant.getString() returns the string directly; the
+            // out-length parameter gtk-d exposed is handled internally.
+            return value.getString();
         }
     }
 
