@@ -10,58 +10,43 @@ import std.format;
 import std.process;
 import std.string;
 
-import gdk.Atom;
-import gdk.Gdk;
-import gdk.RGBA;
-import gdk.X11;
+import gdk.display : Display;
+import gdk.rgba : RGBA;
 
-import gio.FileIF;
-import gio.ListModelIF;
-import gio.Settings: GSettings = Settings;
+import gio.file : File;
+import gio.list_model : ListModel;
+import gio.settings : GSettings = Settings;
 
-import glib.GException;
-import glib.ListG;
-import glib.Str;
+import glib.error : GException = ErrorWrap;
+import glib.main_context : MainContext;
 
-import gobject.ObjectG;
-import gobject.Type;
-import gobject.TypeInstance;
-import gobject.Value;
+import gobject.global : typeName;
+import gobject.types : GType, GTypeEnum;
+import gobject.value : Value;
 
-import gtk.Bin;
-import gtk.Box;
-import gtk.ComboBox;
-import gtk.CellRendererText;
-import gtk.Container;
-import gtk.Entry;
-import gtk.ListStore;
-import gtk.Main;
-import gtk.Paned;
-import gtk.Settings;
-import gtk.StyleContext;
-import gtk.TreeIter;
-import gtk.TreeModelIF;
-import gtk.TreePath;
-import gtk.TreeStore;
-import gtk.TreeView;
-import gtk.TreeViewColumn;
-import gtk.Widget;
-import gtk.Window;
-
-import gx.gtk.x11;
+import gtk.box : Box;
+import gtk.combo_box : ComboBox;
+import gtk.cell_renderer_text : CellRendererText;
+import gtk.entry : Entry;
+import gtk.list_store : ListStore;
+import gtk.paned : Paned;
+import gtk.settings : Settings;
+import gtk.style_context : StyleContext;
+import gtk.tree_iter : TreeIter;
+import gtk.tree_model : TreeModel;
+import gtk.tree_path : TreePath;
+import gtk.tree_store : TreeStore;
+import gtk.tree_view : TreeView;
+import gtk.tree_view_column : TreeViewColumn;
+import gtk.types : Orientation, StateFlags;
+import gtk.widget : Widget;
+import gtk.window : Window;
 
 /**
  * Parse filename and return FileIF object
  */
-public FileIF parseName(string parseName) {
-    import gio.c.functions;
-    auto p = g_file_parse_name(Str.toStringz(parseName));
-
-    if(p is null) {
-        return null;
-    }
-
-    return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+public File parseName(string parseName) {
+    return File.parseName(parseName);
 }
 
 
@@ -69,27 +54,17 @@ public FileIF parseName(string parseName) {
 /**
  * Directly process events for up to a specified period
  */
-static if (__VERSION__ >=2075) {
-    void processEvents(uint millis) {
-        import std.datetime.stopwatch: StopWatch, AutoStart;
-        StopWatch sw = StopWatch(AutoStart.yes);
-        scope (exit) {
-            sw.stop();
-        }
-        while (gtk.Main.Main.eventsPending() && sw.peek.total!"msecs" < millis) {
-            Main.iterationDo(false);
-        }
+void processEvents(uint millis) {
+    import std.datetime.stopwatch : StopWatch, AutoStart;
+
+    // GTK4 removed gtk_main_iteration(); drive the GLib main context directly.
+    auto context = MainContext.default_();
+    StopWatch sw = StopWatch(AutoStart.yes);
+    scope (exit) {
+        sw.stop();
     }
-} else {
-    void processEvents(uint millis) {
-        import std.datetime: StopWatch, AutoStart;
-        StopWatch sw = StopWatch(AutoStart.yes);
-        scope (exit) {
-            sw.stop();
-        }
-        while (gtk.Main.Main.eventsPending() && sw.peek().msecs < millis) {
-            Main.iterationDo(false);
-        }
+    while (context.pending() && sw.peek.total!"msecs" < millis) {
+        context.iteration(false);
     }
 }
 
@@ -99,14 +74,10 @@ static if (__VERSION__ >=2075) {
 void activateWindow(Window window) {
     if (window.isActive()) return;
 
-    if (isWayland(window)) {
-        trace("Present Window for Wayland");
-        window.presentWithTime(GDK_CURRENT_TIME);
-    } else {
-        trace("Present Window for X11");
-        window.present();
-        activateX11Window(window);
-    }
+    // GTK4 dropped presentWithTime() and there is no GID binding for the X11
+    // backend, so the old _NET_ACTIVE_WINDOW dance in gx.gtk.x11 is gone. The
+    // compositor decides whether the request is honoured.
+    window.present();
 }
 
 /**
@@ -114,17 +85,18 @@ void activateWindow(Window window) {
  * it just uses a simple environment variable check to detect it.
  */
 bool isWayland(Window window) {
-    if (window is null || window.getWindow() is null) {
-        return (environment.get("XDG_SESSION_TYPE","x11") == "wayland" && environment.get("GDK_BACKEND")!="x11");
+    // GdkWindow is gone in GTK4 and GID has no gdkx11/gdkwayland bindings, so
+    // the backend is identified by the display's GObject type name instead of
+    // by type-checking against GdkX11Window.
+    Display display = window is null ? Display.getDefault() : window.getDisplay();
+    if (display !is null) {
+        string name = typeName(display._gType);
+        if (name.length > 0) {
+            return name.indexOf("Wayland") >= 0;
+        }
     }
-
-    import gtkc.gdk: gdk_x11_window_get_type;
-    import gtkc.gobject: g_type_check_instance_is_a;
-
-    GType x11Type = gdk_x11_window_get_type();
-    GTypeInstance* instance = cast(GTypeInstance*)(window.getWindow().getObjectGStruct());
-
-    return g_type_check_instance_is_a(instance, x11Type) == 0;
+    return environment.get("XDG_SESSION_TYPE", "x11") == "wayland"
+        && environment.get("GDK_BACKEND") != "x11";
 }
 
 /**
@@ -142,7 +114,7 @@ string getGtkTheme() {
 Box createBox(Orientation orientation, int spacing,  Widget[] children) {
     Box result = new Box(orientation, spacing);
     foreach(child; children) {
-        result.add(child);
+        result.append(child);
     }
     return result;
 }
@@ -150,10 +122,12 @@ Box createBox(Orientation orientation, int spacing,  Widget[] children) {
 /**
  * Finds the index position of a child in a container.
  */
-int getChildIndex(Container container, Widget child) {
-    Widget[] children = container.getChildren().toArray!Widget();
-    foreach(i, c; children) {
-        if (c.getWidgetStruct() == child.getWidgetStruct()) return cast(int) i;
+int getChildIndex(Widget parent, Widget child) {
+    if (parent is null || child is null) return -1;
+    int i = 0;
+    for (Widget c = parent.getFirstChild(); c !is null; c = c.getNextSibling()) {
+        if (c._cPtr == child._cPtr) return i;
+        i++;
     }
     return -1;
 }
@@ -176,23 +150,12 @@ T findParent(T) (Widget widget) {
  */
 T[] getChildren(T) (Widget widget, bool recursive) {
     T[] result;
-    Widget[] children;
 
     if (widget is null) return result;
 
-    Bin bin = cast(Bin) widget;
-    if (bin !is null) {
-        children = [bin.getChild()];
-    } else {
-        Container container = cast(Container) widget;
-        if (container !is null) {
-            ListG list = container.getChildren();
-            if (list !is null)
-                children = list.toArray!(Widget)();
-        }
-    }
-
-    foreach(child; children) {
+    // GTK4 dropped GtkContainer and GtkBin: children hang off the widget
+    // itself, so the single-child and multi-child cases are now the same walk.
+    for (Widget child = widget.getFirstChild(); child !is null; child = child.getNextSibling()) {
         T match = cast(T) child;
         if (match !is null) result ~= match;
         if (recursive) {
@@ -208,12 +171,15 @@ T[] getChildren(T) (Widget widget, bool recursive) {
  * blog entry here: https://blogs.gnome.org/mclasen/2015/11/20/a-gtk-update/
  */
 void getStyleBackgroundColor(StyleContext context, StateFlags flags, out RGBA color) {
-    with (context) {
-        save();
-        setState(flags);
-        getBackgroundColor(getState(), color);
-        restore();
+    // gtk_style_context_get_background_color() was removed: GTK4 has no single
+    // background colour for a style context, it is painted from the CSS
+    // background shorthand. Callers must read a named colour instead.
+    context.save();
+    context.setState(flags);
+    if (!context.lookupColor("theme_bg_color", color)) {
+        color = RGBA(0.0f, 0.0f, 0.0f, 0.0f);
     }
+    context.restore();
 }
 
 /**
@@ -222,12 +188,10 @@ void getStyleBackgroundColor(StyleContext context, StateFlags flags, out RGBA co
  * blog entry here: https://blogs.gnome.org/mclasen/2015/11/20/a-gtk-update/
  */
 void getStyleColor(StyleContext context, StateFlags flags, out RGBA color) {
-    with (context) {
-        save();
-        setState(flags);
-        getColor(getState(), color);
-        restore();
-    }
+    context.save();
+    context.setState(flags);
+    context.getColor(color);
+    context.restore();
 }
 
 /**
@@ -241,9 +205,9 @@ void setAllMargins(Widget widget, int margin) {
  * Sets margins of a widget to the passed values
  */
 void setMargins(Widget widget, int left, int top, int right, int bottom) {
-    widget.setMarginLeft(left);
+    widget.setMarginStart(left);
     widget.setMarginTop(top);
-    widget.setMarginRight(right);
+    widget.setMarginEnd(right);
     widget.setMarginBottom(bottom);
 }
 
@@ -265,10 +229,7 @@ enum long GDK_CURRENT_TIME = 0;
  * Compares two RGBA and returns if they are equal, supports null references
  */
 bool equal(RGBA r1, RGBA r2) {
-    if (r1 is null && r2 is null)
-        return true;
-    if ((r1 is null && r2 !is null) || (r1 !is null && r2 is null))
-        return false;
+    // RGBA is a value type in GID, so there are no null references to guard.
     return r1.equal(r2);
 }
 
@@ -277,16 +238,17 @@ bool equal(Widget w1, Widget w2) {
         return true;
     if ((w1 is null && w2 !is null) || (w1 !is null && w2 is null))
         return false;
-    return w1.getWidgetStruct() == w2.getWidgetStruct();
+    return w1._cPtr == w2._cPtr;
 }
 
 /**
  * Appends multiple values to a row in a list store
  */
 TreeIter appendValues(TreeStore ts, TreeIter parentIter, string[] values) {
-    TreeIter iter = ts.createIter(parentIter);
+    TreeIter iter;
+    ts.append(iter, parentIter);
     for (int i = 0; i < values.length; i++) {
-        ts.setValue(iter, i, values[i]);
+        ts.setValue(iter, i, new Value(values[i]));
     }
     return iter;
 }
@@ -295,9 +257,10 @@ TreeIter appendValues(TreeStore ts, TreeIter parentIter, string[] values) {
  * Appends multiple values to a row in a list store
  */
 TreeIter appendValues(ListStore ls, string[] values) {
-    TreeIter iter = ls.createIter();
+    TreeIter iter;
+    ls.append(iter);
     for (int i = 0; i < values.length; i++) {
-        ls.setValue(iter, i, values[i]);
+        ls.setValue(iter, i, new Value(values[i]));
     }
     return iter;
 }
@@ -308,13 +271,13 @@ TreeIter appendValues(ListStore ls, string[] values) {
  */
 ComboBox createNameValueCombo(const string[string] keyValues) {
 
-    ListStore ls = new ListStore([GType.STRING, GType.STRING]);
+    ListStore ls = ListStore.new_([GTypeEnum.String, GTypeEnum.String]);
 
     foreach (key, value; keyValues) {
         appendValues(ls, [value, key]);
     }
 
-    ComboBox cb = new ComboBox(ls, false);
+    ComboBox cb = ComboBox.newWithModel(ls);
     cb.setFocusOnClick(false);
     cb.setIdColumn(1);
     CellRendererText cell = new CellRendererText();
@@ -332,13 +295,13 @@ ComboBox createNameValueCombo(const string[string] keyValues) {
 ComboBox createNameValueCombo(const string[] names, const string[] values) {
     assert(names.length == values.length);
 
-    ListStore ls = new ListStore([GType.STRING, GType.STRING]);
+    ListStore ls = ListStore.new_([GTypeEnum.String, GTypeEnum.String]);
 
     for (int i = 0; i < names.length; i++) {
         appendValues(ls, [names[i], values[i]]);
     }
 
-    ComboBox cb = new ComboBox(ls, false);
+    ComboBox cb = ComboBox.newWithModel(ls);
     cb.setFocusOnClick(false);
     cb.setIdColumn(1);
     CellRendererText cell = new CellRendererText();
@@ -372,7 +335,7 @@ template TComboBox(T) {
             ls.setValue(iter, 1, values[row]);
         }
 
-        ComboBox cb = new ComboBox(ls, false);
+        ComboBox cb = ComboBox.newWithModel(ls);
         cb.setFocusOnClick(false);
         cb.setIdColumn(1);
         CellRendererText cell = new CellRendererText();
@@ -387,7 +350,7 @@ template TComboBox(T) {
  * Selects the specified row in a Treeview
  */
 void selectRow(TreeView tv, int row, TreeViewColumn column = null) {
-    TreeModelIF model = tv.getModel();
+    TreeModel model = tv.getModel();
     TreeIter iter;
     model.iterNthChild(iter, null, row);
     if (iter !is null) {
@@ -403,17 +366,17 @@ void selectRow(TreeView tv, int row, TreeViewColumn column = null) {
 struct TreeIterRange {
 
 private:
-    TreeModelIF model;
+    TreeModel model;
     TreeIter iter;
     bool _empty;
 
 public:
-    this(TreeModelIF model) {
+    this(TreeModel model) {
         this.model = model;
         _empty = !model.getIterFirst(iter);
     }
 
-    this(TreeModelIF model, TreeIter parent) {
+    this(TreeModel model, TreeIter parent) {
         this.model = model;
         _empty = !model.iterChildren(iter, parent);
         if (_empty) trace("TreeIter has no children");
