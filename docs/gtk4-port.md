@@ -93,7 +93,12 @@ Converted so far, each typechecked with `contrib/gid-typecheck.sh`:
 * `gx/gtk/resource.d`
 * `gx/gtk/threads.d` — 193 lines down to 46; GID accepts D delegates as
   GSourceFuncs, so the DelegatePointer/GC.addRoot marshalling is gone
+* `gx/gtk/vte.d`
+* `gx/gtk/util.d` — the structural one: no GtkContainer/GtkBin, no
+  gtk_main_iteration, direction-aware margins, GValue-based store setters
+* `gx/tilix/colorschemes.d`
 * `gx/gtk/clipboard.d` — deleted; GTK4 has no GdkAtom
+* `gx/gtk/x11.d` — deleted; GID ships no gdkx11 bindings to port it onto
 
 Deliberately deferred, because they force changes on their callers rather
 than being contained:
@@ -104,24 +109,24 @@ than being contained:
 
 `gx/gtk/vte.d` is converted, so everything in `gx/gtk` is done except those.
 
-### util.d is the next bottleneck
+### Behaviour changes made along the way
 
-16 modules import `gx.gtk.util`, and things like `equal(RGBA, RGBA)` live
-there, so very little else can be typechecked until it lands. Most of its ~20
-functions are mechanical; only a few are not:
+Two conversions could not preserve the old behaviour exactly, and both deserve
+a look once the UI runs again:
 
-* `activateWindow()` / `isWayland()` — currently detect the backend by asking
-  whether the GdkWindow is a `GdkX11Window`, and call into `gx/gtk/x11.d`.
-* `getStyleBackgroundColor()` / `getStyleColor()` — the GTK3 style-context
-  colour getters are gone.
+* `getStyleBackgroundColor()` — `gtk_style_context_get_background_color()` was
+  removed outright, because GTK4 paints backgrounds from the CSS background
+  shorthand and there is no single colour to read back. It now resolves the
+  `theme_bg_color` named colour instead, which is not the same thing.
+* `activateWindow()` — the `_NET_ACTIVE_WINDOW` path is gone with
+  `gx/gtk/x11.d`; it now just calls `present()` and lets the compositor decide
+  whether to honour it.
 
-**GID ships no gdkx11 or gdkwayland bindings**, so the backend cannot be
-detected by type-checking against those classes the way the current code does.
-A workable substitute that needs no backend bindings: read the display's GObject
-type name via `gobject.global.typeName(display._gType)` and look for
-`GdkWaylandDisplay` / `GdkX11Display`. The X11 window-activation path in
-`gx/gtk/x11.d` has no equivalent at all and needs a different answer — most
-likely dropping it in favour of plain `present()`.
+**GID ships no gdkx11 or gdkwayland bindings**, which is what forced both. It
+also means `isWayland()` can no longer type-check against `GdkX11Window`
+(GdkWindow does not exist in GTK4 either); it reads the display's GObject type
+name via `gobject.global.typeName(display._gType)` and falls back to the
+environment variables.
 
 ## Local prerequisites still missing
 
