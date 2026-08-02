@@ -97,6 +97,9 @@ Converted so far, each typechecked with `contrib/gid-typecheck.sh`:
 * `gx/gtk/util.d` — the structural one: no GtkContainer/GtkBin, no
   gtk_main_iteration, direction-aware margins, GValue-based store setters
 * `gx/tilix/colorschemes.d`
+* `gx/tilix/preferences.d`
+* `gx/tilix/cmdparams.d`
+* `gx/tilix/terminal/regex.d`
 * `gx/gtk/clipboard.d` — deleted; GTK4 has no GdkAtom
 * `gx/gtk/x11.d` — deleted; GID ships no gdkx11 bindings to port it onto
 
@@ -108,6 +111,32 @@ than being contained:
 * `gx/gtk/x11.d` and `gx/gtk/util.d` — direct X11 and GdkWindow access
 
 `gx/gtk/vte.d` is converted, so everything in `gx/gtk` is done except those.
+
+### GID API rules worth knowing before converting anything else
+
+Each of these was verified against the GID sources, not assumed:
+
+* **Overloaded constructors become named static factories.** gtk-d turned every
+  `g_*_new_*` into a `this(...)` overload. GID keeps only the primary one as a
+  constructor and names the rest: `new GSettings(id, path)` →
+  `Settings.newWithPath(id, path)`, `VRegex.newMatch(pattern, -1, flags)` →
+  `VRegex.newForMatch(pattern, flags)` (GID takes the length from the D string).
+* **GID constructors do not throw where gtk-d's did.** gtk-d raised
+  `ConstructionException` when the C call returned NULL; GID either returns
+  `null` (when it routes through `ObjectWrap._getDObject`) or, more often, hands
+  back a live D object wrapping a NULL pointer, which only misbehaves at first
+  use. Any `catch (ConstructionException)` in the tree is therefore dead code,
+  and null-guards need to test `_cPtr`, not the reference.
+* **Exception types are per-domain and inherit.** `GRegex`'s constructor throws
+  `glib.regex.RegexException`, but `VRegex.newForMatch` throws plain
+  `glib.error.ErrorWrap`, and `RegexException` is a *subclass* of `ErrorWrap`.
+  A `catch (RegexException)` around the VTE path would silently stop catching
+  invalid user-supplied patterns — terminal.d must catch `ErrorWrap` there.
+* **`Boxed` owns what it wraps.** GID's `Boxed.~this()` calls `g_boxed_free`,
+  where gtk-d's wrappers never freed. Anything returned as a Boxed — VteRegex,
+  GRegex, MatchInfo, VariantDict — must stay reachable for as long as C uses it.
+* **Flag enums live in the binding's own `types` module and are PascalCase**:
+  `GRegexCompileFlags.OPTIMIZE` → `glib.types.RegexCompileFlags.Optimize`.
 
 ### Behaviour changes made along the way
 
@@ -122,6 +151,13 @@ a look once the UI runs again:
   `gx/gtk/x11.d`; it now just calls `present()` and lets the compositor decide
   whether to honour it.
 
+A third is queued rather than made: `gx/tilix/terminal/regex.d` builds
+`compiledVRegex` in a `shared static this()`, which runs before `main()`. GID's
+vte3 binding resolves against `libvte-2.91-gtk4`, and an unresolved symbol there
+throws before Tilix can report anything. That construction wants moving into a
+lazily-initialised accessor so a missing or too-old VTE produces Tilix's own
+error path instead of a pre-main abort.
+
 **GID ships no gdkx11 or gdkwayland bindings**, which is what forced both. It
 also means `isWayland()` can no longer type-check against `GdkX11Window`
 (GdkWindow does not exist in GTK4 either); it reads the display's GObject type
@@ -133,4 +169,6 @@ environment variables.
 * `libgtk-4-dev` — the GTK4 runtime is present here, but not the headers, so
   VTE cannot yet be built with `-Dgtk4=true`.
 * A VTE built for GTK4 (`libvte-2.91-gtk4`), which no distro package provides
-  here either.
+  here either. GID's vte3 binding names exactly that library, so nothing using
+  `vte.*` can be run — only typechecked — until it exists. `contrib/build-vte-sixel.sh`
+  already builds the GTK3 one and is the obvious starting point.
