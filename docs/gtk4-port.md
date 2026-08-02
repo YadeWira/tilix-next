@@ -63,6 +63,7 @@ These need actual redesign, not translation — 202 sites in total:
 | `Alignment` | 12 | 3 | Removed; use halign/valign/margins |
 | cairo draw handlers | 6 | 3 | GTK4 renders through GSK snapshots |
 | direct X11 | 4 | 2 | X11-only paths need a Wayland-safe story |
+| synchronous dialogs | 23 | — | `Dialog.run()` is gone; dialogs are async only, so callers' control flow changes too |
 
 ### Free wins
 
@@ -80,6 +81,26 @@ that whole tree gets deleted rather than ported.
 3. **VTE for GTK4** (`gid:vte3`), and re-doing the sixel drawing patch against
    GSK — `patches/vte-draw-sixel-images.patch` is cairo-based and therefore
    GTK3-only. See `patches/README.md`.
+
+## Progress
+
+Converted so far, each typechecked with `contrib/gid-typecheck.sh`:
+
+* `gx/i18n/l10n.d`
+* `gx/gtk/color.d`
+* `gx/gtk/settings.d`
+* `gx/gtk/actions.d`
+* `gx/gtk/resource.d`
+* `gx/gtk/threads.d` — 193 lines down to 46; GID accepts D delegates as
+  GSourceFuncs, so the DelegatePointer/GC.addRoot marshalling is gone
+* `gx/gtk/clipboard.d` — deleted; GTK4 has no GdkAtom
+
+Deliberately deferred, because they force changes on their callers rather
+than being contained:
+
+* `gx/gtk/dialog.d` — needs the synchronous-to-async dialog rewrite above
+* `gx/gtk/cairo.d` — uses OffscreenWindow, GdkWindow and GdkVisual, all removed
+* `gx/gtk/x11.d` and `gx/gtk/util.d` — direct X11 and GdkWindow access
 
 ## Local prerequisites still missing
 
