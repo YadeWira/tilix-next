@@ -12,9 +12,9 @@ import std.json;
 import std.path;
 import std.uuid;
 
-import gdk.RGBA;
+import gdk.rgba : RGBA;
 
-import glib.Util;
+import glib.global : getSystemDataDirs, getUserConfigDir;
 
 import gx.gtk.color;
 import gx.gtk.util;
@@ -68,17 +68,17 @@ class ColorScheme {
 
     this() {
         id = randomUUID().toString();
-        foreground = new RGBA();
-        background = new RGBA();
-        highlightFG = new RGBA();
-        highlightBG = new RGBA();
-        cursorFG = new RGBA();
-        cursorBG = new RGBA();
-        badgeColor = new RGBA();
-        boldColor = new RGBA();
+        foreground = RGBA.init;
+        background = RGBA.init;
+        highlightFG = RGBA.init;
+        highlightBG = RGBA.init;
+        cursorFG = RGBA.init;
+        cursorBG = RGBA.init;
+        badgeColor = RGBA.init;
+        boldColor = RGBA.init;
 
         for (int i = 0; i < 16; i++) {
-            palette[i] = new RGBA();
+            palette[i] = RGBA.init;
         }
     }
 
@@ -171,7 +171,7 @@ int findSchemeByColors(ColorScheme[] schemes, ColorScheme scheme) {
  */
 ColorScheme[] loadColorSchemes() {
     ColorScheme[] schemes;
-    string[] paths = Util.getSystemDataDirs() ~ Util.getUserConfigDir();
+    string[] paths = getSystemDataDirs() ~ getUserConfigDir();
     foreach (path; paths) {
         auto fullpath = buildPath(path, APPLICATION_CONFIG_FOLDER, SCHEMES_FOLDER);
         trace("Loading color schemes from " ~ fullpath);
