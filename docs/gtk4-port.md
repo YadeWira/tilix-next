@@ -100,6 +100,11 @@ Converted so far, each typechecked with `contrib/gid-typecheck.sh`:
 * `gx/tilix/preferences.d`
 * `gx/tilix/cmdparams.d`
 * `gx/tilix/terminal/regex.d`
+* `gx/tilix/shortcuts.d`
+* `gx/tilix/terminal/advpaste.d`
+* `gx/tilix/terminal/search.d`
+* `gx/tilix/terminal/exvte.d`
+* `gx/tilix/bookmark/manager.d`
 * `gx/gtk/clipboard.d` — deleted; GTK4 has no GdkAtom
 * `gx/gtk/x11.d` — deleted; GID ships no gdkx11 bindings to port it onto
 
@@ -137,6 +142,25 @@ Each of these was verified against the GID sources, not assumed:
   GRegex, MatchInfo, VariantDict — must stay reachable for as long as C uses it.
 * **Flag enums live in the binding's own `types` module and are PascalCase**:
   `GRegexCompileFlags.OPTIMIZE` → `glib.types.RegexCompileFlags.Optimize`.
+
+### Widget semantics that changed without changing the API
+
+Things that still compile and still look right, but no longer mean what they did:
+
+* **GtkSearchEntry is no longer a GtkEntry.** In GTK4 it is a non-focusable
+  GtkWidget wrapping an internal GtkText, so `hasFocus()`/`isFocus()` on the
+  search entry answer false the whole time the user is typing in it. Resolve
+  focus through the root's focus widget and `isAncestor()` instead.
+* **GtkFrame lost shadow-type.** Framing is pure CSS now, and the theme styles the
+  `frame` node by default, so anywhere GTK3 said `ShadowType.NONE` the border has
+  to be turned off in CSS explicitly.
+* **::destroy only fires from dispose.** GTK3's `gtk_widget_destroy()` was explicit
+  and recursive; GTK4 has no such call for non-window widgets, so cleanup handlers
+  attached to ::destroy no longer run at teardown while anything still holds a
+  reference.
+* **Exceptions from signal callbacks are swallowed.** GID's generated marshaller
+  catches them and writes to stderr rather than letting them propagate, so they
+  bypass Tilix's own logger and error dialog.
 
 ### Behaviour changes made along the way
 
