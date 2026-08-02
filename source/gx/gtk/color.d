@@ -9,7 +9,7 @@ import std.conv;
 import std.experimental.logger;
 import std.format;
 
-import gdk.RGBA;
+import gdk.rgba : RGBA;
 
 public:
 
@@ -23,11 +23,11 @@ public:
  */
 string rgbaTo8bitHex(RGBA color, bool includeAlpha = false, bool includeHash = false) {
     string prepend = includeHash ? "#" : "";
-    int red = to!(int)(color.red() * 255);
-    int green = to!(int)(color.green() * 255);
-    int blue = to!(int)(color.blue() * 255);
+    int red = to!(int)(color.red * 255);
+    int green = to!(int)(color.green * 255);
+    int blue = to!(int)(color.blue * 255);
     if (includeAlpha) {
-        int alpha = to!(int)(color.alpha() * 255);
+        int alpha = to!(int)(color.alpha * 255);
         return prepend ~ format("%02X%02X%02X%02X", red, green, blue, alpha);
     } else {
         return prepend ~ format("%02X%02X%02X", red, green, blue);
@@ -45,11 +45,11 @@ string rgbaTo8bitHex(RGBA color, bool includeAlpha = false, bool includeHash = f
  */
 string rgbaTo16bitHex(RGBA color, bool includeAlpha = false, bool includeHash = false) {
     string prepend = includeHash ? "#" : "";
-    int red = to!(int)(color.red() * 255);
-    int green = to!(int)(color.green() * 255);
-    int blue = to!(int)(color.blue() * 255);
+    int red = to!(int)(color.red * 255);
+    int green = to!(int)(color.green * 255);
+    int blue = to!(int)(color.blue * 255);
     if (includeAlpha) {
-        int alpha = to!(int)(color.alpha() * 255);
+        int alpha = to!(int)(color.alpha * 255);
         return prepend ~ format("%02X%02X%02X%02X%02X%02X%02X%02X", red, red, green, green, blue, blue, alpha, alpha);
     } else {
         return prepend ~ format("%02X%02X%02X%02X%02X%02X", red, red, green, green, blue, blue);
@@ -57,7 +57,7 @@ string rgbaTo16bitHex(RGBA color, bool includeAlpha = false, bool includeHash = 
 }
 
 RGBA getOppositeColor(RGBA rgba) {
-    RGBA result = new RGBA(1.0 - rgba.red, 1 - rgba.green, 1 - rgba.red, rgba.alpha);
+    RGBA result = RGBA(1.0f - rgba.red, 1.0f - rgba.green, 1.0f - rgba.blue, rgba.alpha);
     tracef("Original: %s, New: %s", rgbaTo8bitHex(rgba, true, true), rgbaTo8bitHex(result, true, true));
     return result;
 }
