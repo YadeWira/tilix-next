@@ -102,6 +102,27 @@ than being contained:
 * `gx/gtk/cairo.d` — uses OffscreenWindow, GdkWindow and GdkVisual, all removed
 * `gx/gtk/x11.d` and `gx/gtk/util.d` — direct X11 and GdkWindow access
 
+`gx/gtk/vte.d` is converted, so everything in `gx/gtk` is done except those.
+
+### util.d is the next bottleneck
+
+16 modules import `gx.gtk.util`, and things like `equal(RGBA, RGBA)` live
+there, so very little else can be typechecked until it lands. Most of its ~20
+functions are mechanical; only a few are not:
+
+* `activateWindow()` / `isWayland()` — currently detect the backend by asking
+  whether the GdkWindow is a `GdkX11Window`, and call into `gx/gtk/x11.d`.
+* `getStyleBackgroundColor()` / `getStyleColor()` — the GTK3 style-context
+  colour getters are gone.
+
+**GID ships no gdkx11 or gdkwayland bindings**, so the backend cannot be
+detected by type-checking against those classes the way the current code does.
+A workable substitute that needs no backend bindings: read the display's GObject
+type name via `gobject.global.typeName(display._gType)` and look for
+`GdkWaylandDisplay` / `GdkX11Display`. The X11 window-activation path in
+`gx/gtk/x11.d` has no equivalent at all and needs a different answer — most
+likely dropping it in favour of plain `present()`.
+
 ## Local prerequisites still missing
 
 * `libgtk-4-dev` — the GTK4 runtime is present here, but not the headers, so
